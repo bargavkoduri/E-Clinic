@@ -24,25 +24,25 @@ export default function Navbar() {
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="#working">
+                <a className="nav-link" href="#working">
                   {" "}
                   Features
-                </Link>
+                </a>
               </li>
               <li className="nav-item">
-                <Link to="#testimonials" className="nav-link">
+                <a href="#testimonials" className="nav-link">
                   Testimonial
-                </Link>
+                </a>
               </li>
               <li className="nav-item">
-                <Link to="#contact_us" className="nav-link">
+                <a href="#contact_us" className="nav-link">
                   Contact
-                </Link>
+                </a>
               </li>
               <li className="nav-item">
-                <Link to="/signin" className="nav-link">
+                <a href="/signin" className="nav-link">
                   Login
-                </Link>
+                </a>
               </li>
             </ul>
           </div>

@@ -1,5 +1,4 @@
-import "./signin.css";
-
+import "./signin.css"
 import { Link } from "react-router-dom";
 function Index() {
   return (
@@ -12,8 +11,7 @@ function Index() {
                 className={"img img-fluid"}
                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
                 alt="login form"
-                // className="img-fluid"
-                style={{ "border-radius": "1rem 0 0 1rem" }}
+                style={{ borderRadius: "1rem 0 0 1rem" }}
               />
             </div>
             <div className="col-lg-6 col-md-6">

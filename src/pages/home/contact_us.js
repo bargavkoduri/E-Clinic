@@ -12,7 +12,7 @@ export default function ContactUs() {
 
 function ContactForm(props){
     return (
-      <section id="contact_us">
+      <section id="contact_us" style={{backgroundColor : "white"}}>
         <div className="container-fluid cont">
           <h1 className="work">Drop Us a Message/Grievance</h1>
 
