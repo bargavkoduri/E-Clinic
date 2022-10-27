@@ -1,22 +1,23 @@
-import {useState} from 'react'
-import Credential from './credential';
-import Doctor from './doctor';
-import Patient from './patient';
-import Progressbar from './progressbar';
+import { useState } from "react";
+import Credential from "./credential";
+import Doctor from "./doctor";
+import Patient from "./patient";
+import Progressbar from "./progressbar";
 import { Link } from "react-router-dom";
+import axios from "axios";
 export default function Data(props) {
-  const [user,setUser] = useState("default")
-  const [level,setLevel] = useState(0)
-  const [data,setData] = useState({})
+  const [user, setUser] = useState("default");
+  const [level, setLevel] = useState(0);
+  const [data, setData] = useState({});
 
-  if(user === "default"){
+  if (user === "default") {
     return (
       <>
-        <Progressbar level={level}/>
+        <Progressbar level={level} />
         <hr style={{ marginTop: "1rem", width: "90%", marginBottom: "0rem" }} />
         <div className="signup-body-1">
           <div className="signup-log">
-            <h3 style={{fontSize : "1.75rem"}}>Select User</h3>
+            <h3 style={{ fontSize: "1.75rem" }}>Select User</h3>
           </div>
 
           <div className="row signup-but">
@@ -47,19 +48,16 @@ export default function Data(props) {
         </div>
       </>
     );
-  }
-  else if(level === 1 && (user === "doctor" || user === "patient") ){
+  } else if (level === 1 && (user === "doctor" || user === "patient")) {
     return (
       <>
         <Progressbar level={level} />
         <hr style={{ marginTop: "1rem", width: "90%", marginBottom: "0rem" }} />
         <Credential setLevel={setLevel} setData={setData} />
       </>
-    );    
-   
-  }
-  else if(level === 2){
-    if(user === "doctor")
+    );
+  } else if (level === 2) {
+    if (user === "doctor")
       return (
         <>
           <Progressbar level={level} />
@@ -79,10 +77,11 @@ export default function Data(props) {
           <Patient setLevel={setLevel} setData={setData} />
         </>
       );
-  }
-  else if(level === 3){
+  } else if (level === 3) {
+    axios.post(`http://localhost:5000/${user}s`, data);
     return (
       <>
+        <h2>Registration successful</h2>
         <Link to="/signin">
           <h2>Click here to Login</h2>
         </Link>

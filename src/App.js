@@ -1,18 +1,25 @@
 import Home from './pages/home/index'
 import Signin from './pages/signin/index'
 import Signup from './pages/signup'
-import React from "react";
+import Patient from './pages/PatientPortal';
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+export const UserContext = React.createContext()
+
 function App() {
+  const [user, setUser] = useState({ type: "", email: "", password: "" });
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} exact/>
-        <Route path='/signin' element={<Signin/>} exact/>
-        <Route path='/signup' element={<Signup/>}/>
-      </Routes>
-    </Router>
+    <UserContext.Provider value={{user,setUser}}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signin" element={<Signin />}  />
+          <Route path="/signup" element={<Signup />} />
+          <Route path='/patientportal' element={<Patient/>}/>
+        </Routes>
+      </Router>
+    </UserContext.Provider>
   );
 }
 

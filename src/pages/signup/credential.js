@@ -1,9 +1,11 @@
-import { useRef } from "react";
+import axios from "axios";
+import { useRef, useState } from "react";
 
 export default function Credential(props) {
   const email = useRef();
   const password = useRef();
   const repassword = useRef();
+  const [errmsg,setErrmsg] = useState("");
 
   const showPassword = () => {
     if (password.current.type === "password") {
@@ -15,9 +17,9 @@ export default function Credential(props) {
     }
   };
 
-  function ValidateEmail(x) {
-    var atposition = x.indexOf("@");
-    var dotposition = x.lastIndexOf(".");
+  async function ValidateEmail(x) {
+    let atposition = x.indexOf("@");
+    let dotposition = x.lastIndexOf(".");
     if (
       atposition < 1 ||
       dotposition < atposition + 2 ||
@@ -25,7 +27,21 @@ export default function Credential(props) {
     ) {
       return false;
     }
-    return true;
+    else{
+      let resp = await axios.get(`http://localhost:5000/patients?email=${x}`);
+      if (resp.data.length === 0)
+        resp = await axios.get(`http://localhost:5000/doctors?email=${x}`);
+      if (resp.data.length !== 0) {
+        setErrmsg("Email Already Exists");
+        setTimeout(() => {
+          setErrmsg("");
+        }, 5000);
+        return false;
+      }
+      else{
+        return true;
+      }
+    }
   }
 
   function ValidatePassword(x){
@@ -49,9 +65,9 @@ export default function Credential(props) {
     return false;
   } 
 
-  const fun = () => {
+  const fun = async () => {
     let flag = 0
-    let email_validation = ValidateEmail(email.current.value);
+    let email_validation = await ValidateEmail(email.current.value);
     let similar = password.current.value === repassword.current.value;
     let password_validation = ValidatePassword(password.current.value);
     if(email_validation === false){
@@ -157,6 +173,16 @@ export default function Credential(props) {
             </div>
           </div>
 
+          <div className="form-group">
+            <div className="row">
+            <div className="col-2">
+
+            </div>
+            <div className="col-10">
+              <h6 style={{color : "red",fontSize : '0.85rem'}}>{errmsg}</h6>
+            </div>
+            </div>
+          </div>
           <div className="form-group">
             <div className="row">
               <div className="col-2"></div>

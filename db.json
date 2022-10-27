@@ -1,0 +1,29 @@
+{
+  "patients": [
+    {
+      "email": "doc1@gmail.com",
+      "password": "Password1",
+      "name": "Raju",
+      "aadhdarnumber": "999999999999",
+      "phonenumber": "9494551878",
+      "gender": "male",
+      "dob": "2022-10-05",
+      "allergies": "none",
+      "past_medical_history": "none",
+      "id": 1
+    },
+    {
+      "email": "doc2@gmail.com",
+      "password": "Password1",
+      "name": "Name",
+      "aadhdarnumber": "999999999999",
+      "phonenumber": "94949551878",
+      "gender": "femlae",
+      "dob": "2022-10-13",
+      "allergies": "none",
+      "past_medical_history": "none",
+      "id": 2
+    }
+  ],
+  "doctors": []
+}

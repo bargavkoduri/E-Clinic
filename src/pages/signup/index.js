@@ -16,7 +16,7 @@ export default function Index(){
                   />
                 </div>
                 <div className="col-lg-7 col-md-7">
-                  <Data/>
+                  <Data />
                 </div>
               </div>
             </div>
