@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import Data from "./data";
 
 export default function Patient(props){
 
@@ -122,6 +123,7 @@ export default function Patient(props){
           newdata.dob = dob.current.value
           newdata.allergies = allergies.current.value
           newdata["past_medical_history"] = past.current.value
+          newdata.appointments = []
           return newdata
         })
       }

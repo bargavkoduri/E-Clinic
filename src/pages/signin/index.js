@@ -5,7 +5,6 @@ import { UserContext } from "../../App";
 import axios from "axios";
 function Index() {
   let  {setUser} = useContext(UserContext);
-  console.log(setUser)
   let [Errmsg, setErrmsg] = useState("");
   let email = useRef();
   let password = useRef();
@@ -69,12 +68,13 @@ function Index() {
     return false;
   }
 
-  let logi = async () => {
+  let logi = async (e) => {
+    e.preventDefault();
     let flag = 0;
     if(ValidateEmail(email.current.value) && ValidatePassword(password.current.value)){
       let resp = await axios.get(`http://localhost:5000/patients?email=${email.current.value}&password=${password.current.value}`);
       if( resp.data.length === 0){
-        resp = axios.get(
+        resp = await axios.get(
           `http://localhost:5000/doctors?email=${email.current.value}&password=${password.current.value}`
         );
         flag = 1;
@@ -91,7 +91,6 @@ function Index() {
           navigate("/doctorportal");
         }
         else{
-          console.log("hello")
           setUser({
             user: "patient",
             email: email.current.value,
@@ -104,7 +103,7 @@ function Index() {
   };
 
   return (
-    <section id="login">
+    <section id="login" style={{height : "100vh"}}>
       <div className="container-fluid signin-cont">
         <div className="card">
           <div className="row">
@@ -118,41 +117,41 @@ function Index() {
             </div>
             <div className="col-lg-6 col-md-6">
               <div className="card-body">
-                <form className="" action="/signin" method="post">
-                  <h4>Sign Into Your Account</h4>
-                  <div className="log">
-                    <div className="form-group">
-                      <input
-                        type="email"
-                        name="email"
-                        className="form-control"
-                        id="email"
-                        ref={email}
-                        placeholder="Email Address"
-                      />
+                <form className="" action="/signin" method="post" onSubmit={(e) => logi(e)}>
+                  <h4>Sign Into Your Account</h4> 
+                    <div className="log">
+                      <div className="form-group">
+                        <input
+                          type="email"
+                          name="email"
+                          className="form-control"
+                          id="email"
+                          ref={email}
+                          placeholder="Email Address"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <input
+                          type="password"
+                          name="password"
+                          className="form-control"
+                          id="password"
+                          ref={password}
+                          placeholder="Password"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <h6 style={{color : "red"}}>{Errmsg}</h6>
+                      </div>
                     </div>
-                    <div className="form-group">
-                      <input
-                        type="password"
-                        name="password"
-                        className="form-control"
-                        id="password"
-                        ref={password}
-                        placeholder="Password"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <h6>{Errmsg}</h6>
-                    </div>
-                  </div>
-                  <button
-                    className="btn btn-dark btn-lg btn-block"
-                    id="but"
-                    type="button"
-                    onClick={() => logi()}
-                  >
-                    Login
-                  </button>
+                    <button
+                      className="btn btn-dark btn-lg btn-block"
+                      id="but"
+                      type="submit"
+                    >
+                      Login
+                    </button>
+                  </form>
                   <div className="extra">
                     <Link className="forgot-1" to="/forget">
                       Forgot Password
@@ -171,7 +170,6 @@ function Index() {
                   <Link to="#!" className="small text-muted">
                     Privacy policy
                   </Link>
-                </form>
               </div>
             </div>
           </div>

@@ -9,8 +9,9 @@ export const UserContext = React.createContext()
 
 function App() {
   const [user, setUser] = useState({ type: "", email: "", password: "" });
+  const [data,setData] = useState({})
   return (
-    <UserContext.Provider value={{user,setUser}}>
+    <UserContext.Provider value={{user,setUser,data,setData}}>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
