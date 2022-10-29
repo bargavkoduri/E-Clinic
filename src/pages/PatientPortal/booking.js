@@ -18,8 +18,7 @@ const Book = () => {
     let data1 = doctor_data;
     for (let i in data1) {
       let jj = data1[i];
-
-      if (jj.id === b.target.id) {
+      if (jj.id == b.target.id) {
         for (let j in jj.slots) {
           if (jj.slots[j].time === slot) {
             jj.slots[j].avb = false;
@@ -144,7 +143,7 @@ const Book = () => {
                       type="button"
                       id={item.id}
                       className="btn btn-secondary btn-lg btn-block"
-                      disabled={enable[item.id - 1] === 0}
+                      disabled={enable[item.id - 1] == 0}
                       onClick={(event) => book(event)}
                     >
                       Book Appointment
