@@ -2,6 +2,7 @@ import Upcoming from "./upcoming"
 import Book from "./booking"
 import Cancel from "./cancel"
 import Past from "./Past"
+import Profile from "./Profile"
 
 export default function Display(props){
 
@@ -9,7 +10,7 @@ export default function Display(props){
         return <Upcoming/>
     }
     else if(props.level === "Info"){
-        return <>Info</>
+        return <Profile/>
     }
     else if(props.level === "Booking"){
         return <Book/>

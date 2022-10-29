@@ -1,20 +1,25 @@
+import Upcoming from "./upcoming"
+import Cancel from "./cancel"
+import Past from "./Past"
+import Profile from "./Profile"
+
 export default function Display(props){
     if(props.level === "Upcoming_Appointments"){
-        return <>Upcoming</>
+        return <Upcoming/>
     }
     else if(props.level === "Info"){
-        return <>Info</>
+        return <Profile/>
     }
     else if(props.level === "Schedule_Manager"){
         return <>Schedule Manager</>
     }
     else if(props.level === "Cancel_Appointment"){
-        return <>Cancel Appointment</>
+        return <Cancel/>
     }
     else if(props.level === "Messages"){
         return <>Messages</>
     }
     else if(props.level === "Past_Appointment"){
-        return <>Past Appointment</>
+        return <Past/>
     }
 }

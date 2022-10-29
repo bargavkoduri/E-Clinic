@@ -9,49 +9,8 @@ import {
 } from "mdb-react-ui-kit";
 
 export default function Upcoming() {
-  const {upcoming, setUpcoming} = useContext(PatientContext)
+  const {upcoming} = useContext(PatientContext)
   let {data} = useContext(UserContext)
-  useEffect(() => {
-    if(data.appointments !== undefined && upcoming === []){
-      let initial_list = data.appointments;
-      let final_list = [];
-      let d = new Date();
-      let td =
-        d.getFullYear() +
-        "-" +
-        (((d.getMonth()+1).toString().length === 1 ? "0" : "") +
-          (d.getMonth() + 1).toString()) +
-        "-" +
-        d.getDate();
-      let temptime = d.getHours() + ":" + d.getMinutes();
-      temptime = (temptime.length === 4 ? "0" : "") + temptime;
-      //console.log(temptime+" "+td)
-      for (let i = 0; i < initial_list.length; i++) {
-        let tempdate = initial_list[i].date.substring(0, 10);
-        //console.log(tempdate)
-        if (tempdate >= td) {
-            if (
-               temptime > initial_list[i].time.substring(0, 5) &&
-             initial_list[i].time.substring(6, 11) > temptime
-            ){
-              final_list.push({
-                ...initial_list[i],
-                status: "active",
-                id: final_list.length + 1,
-              });
-            }
-            else if (initial_list[i].time.substring(0, 5) > temptime) {
-              final_list.push({
-                ...initial_list[i],
-                status: "upcoming",
-                id: final_list.length + 1,
-              });
-            }
-        }
-      }
-      setUpcoming(final_list);
-    }
-  }, []);
 
   if(data.appointments !== undefined){
       return (

@@ -46,18 +46,9 @@ const Book = () => {
     setV(re+1)
   };
   useEffect(() => {
-   if(doctor_data === null){
-     axios.get("http://localhost:5000/doctors").then((resp) => {
-       setDData(resp.data);
-       setEnable(Array(resp.data.length).fill(0));
-     });
-   }
-   else{
-      setEnable(Array(doctor_data.length).fill(0))
-   }
-  },[doctor_data])
+   setEnable(Array(doctor_data.length).fill(0))
+  },[])
 
-  if(doctor_data !== null && enable.length === doctor_data.length){
     return (
       <div className="booking" id="booking">
         <h1> Book Doctor Now! </h1>
@@ -156,7 +147,6 @@ const Book = () => {
         </div>
       </div>
     );
-  }
 };
 
 export default Book;

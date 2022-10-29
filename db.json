@@ -25,7 +25,7 @@
       "past_medical_history": "none",
       "appointments": [
         {
-          "date": "2022-10-28T17:57:58.367Z",
+          "date": "2022-10-30T17:57:58.367Z",
           "time": "21:30-22:00",
           "doctor": {
             "name": "Doctor-1",
@@ -68,6 +68,16 @@
           "patient-name" : "",
           "date" : ""
         }}
+      ],
+      "appointments" : [
+        {
+          "date": "2022-10-29T17:57:58.367Z",
+          "time": "21:30-22:00",
+          "patient" : {
+            "name" : "Patient-1",
+            "id" : "1"
+          }
+        }
       ]
     }
   ]

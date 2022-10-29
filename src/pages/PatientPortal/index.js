@@ -18,17 +18,79 @@ function Patient() {
   const [level, setLevel] = useState("Upcoming_Appointments");
   const [width, setWidth] = useState("300px");
   const [marginLeft, setMarginLeft] = useState("340px");
-  const { user,data,setData } = useContext(UserContext);
+  const { user,setData } = useContext(UserContext);
   const [upcoming, setUpcoming] = useState([]);
+  const [taken,setTaken] = useState(0)
   const [past,setPast] = useState([])
-  const [doctor_data, setDData] = useState(null);
+  const [doctor_data, setDData] = useState([]);
 
   function helperfun() {
     axios
       .get(`http://localhost:5000/patients?email=${user.email}`)
       .then((res) => {
         setData(res.data[0]);
+        let initial_list = res.data[0].appointments
+        let final_list = [];
+        let final_list_1 = [];
+        let d = new Date();
+        let td =
+          d.getFullYear() +
+          "-" +
+          (((d.getMonth() + 1).toString().length === 1 ? "0" : "") +
+            (d.getMonth() + 1).toString()) +
+          "-" +
+          d.getDate();
+        let temptime = d.getHours() + ":" + d.getMinutes();
+        temptime = (temptime.length === 4 ? "0" : "") + temptime;
+        console.log(temptime+" "+td)
+        for (let i = 0; i < initial_list.length; i++) {
+          let tempdate = initial_list[i].date.substring(0, 10);
+          if (tempdate === td) {
+            if (
+              temptime > initial_list[i].time.substring(0, 5) &&
+              initial_list[i].time.substring(6, 11) > temptime
+            ) {
+              final_list.push({
+                ...initial_list[i],
+                status: "active",
+                id: final_list.length + 1,
+              });
+            } else if (initial_list[i].time.substring(0, 5) > temptime) {
+              final_list.push({
+                ...initial_list[i],
+                status: "upcoming",
+                id: final_list.length + 1,
+              });
+            }
+            else{
+              final_list_1.push({
+                ...initial_list[i],
+                status : "past",
+                id : final_list_1.length + 1
+              })
+            }
+          }
+          else if(tempdate > td){
+            final_list.push({
+              ...initial_list[i],
+              status : "upcoming",
+              id : final_list.length + 1,
+            })
+          }
+          else{
+            final_list_1.push({
+              ...initial_list[i],
+              status: "past",
+              id: final_list_1.length + 1,
+            });
+          }
+        }
+        setUpcoming(final_list);
+        setPast(final_list_1);
       })
+    axios.get("http://localhost:5000/doctors").then((resp) => {
+      setDData(resp.data)
+    })
   }
 
   useEffect(() => {
@@ -36,7 +98,7 @@ function Patient() {
   }, []);
 
   return (
-    <PatientContext.Provider value={{upcoming,setUpcoming,doctor_data,setDData,past,setPast}}>
+    <PatientContext.Provider value={{upcoming,setUpcoming,doctor_data,setDData,past,setPast,taken,setTaken}}>
       <div className="patient-navigation" style={{ width: width }}>
         <ul>
           <li className={flags.upflag}>

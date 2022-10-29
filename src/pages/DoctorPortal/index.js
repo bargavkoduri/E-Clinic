@@ -15,16 +15,76 @@ export default function Doctor(){
         msgflag : "doctor-list",
         pastflag : "doctor-list",
     })
-    const {user,data,setData} = useContext(UserContext)
+    const {user,setData} = useContext(UserContext)
     const [level,setLevel] = useState("Upcoming_Appointments")
     const [width,setWidth] = useState("300px")
     const [marginLeft,setMarginLeft] = useState("340px")
+    const [upcoming, setUpcoming] = useState([]);
+    const [past,setPast] = useState([])
 
      function helperfun() {
        axios
-         .get(`http://localhost:5000/patients?email=${user.email}`)
+         .get(`http://localhost:5000/doctors?email=${user.email}`)
          .then((res) => {
            setData(res.data[0]);
+           let initial_list = res.data[0].appointments;
+           let final_list = [];
+           let final_list_1 = [];
+           let d = new Date();
+           let td =
+             d.getFullYear() +
+             "-" +
+             (((d.getMonth() + 1).toString().length === 1 ? "0" : "") +
+               (d.getMonth() + 1).toString()) +
+             "-" +
+             d.getDate();
+           let temptime = d.getHours() + ":" + d.getMinutes();
+           temptime = (temptime.length === 4 ? "0" : "") + temptime;
+           //console.log(temptime+" "+td)
+           for (let i = 0; i < initial_list.length; i++) {
+             let tempdate = initial_list[i].date.substring(0, 10);
+             //console.log(tempdate)
+             if (tempdate === td) {
+               if (
+                 temptime > initial_list[i].time.substring(0, 5) &&
+                 initial_list[i].time.substring(6, 11) > temptime
+               ) {
+                 final_list.push({
+                   ...initial_list[i],
+                   status: "active",
+                   id: final_list.length + 1,
+                 });
+               } else if (initial_list[i].time.substring(0, 5) > temptime) {
+                 final_list.push({
+                   ...initial_list[i],
+                   status: "upcoming",
+                   id: final_list.length + 1,
+                 });
+               }
+               else{
+                final_list_1.push({
+                  ...initial_list[i],
+                  status : "past",
+                  id : final_list_1.length + 1
+                })
+               }
+             } else if (tempdate > td) {
+               final_list.push({
+                 ...initial_list[i],
+                 status: "upcoming",
+                 id: final_list.length + 1,
+               });
+             }
+             else{
+                final_list_1.push({
+                  ...initial_list[i],
+                  status : "past",
+                  id : final_list_1.length+1,
+                })
+             }
+           }
+           setUpcoming(final_list);
+           setPast(final_list_1);
          });
      }
 
@@ -33,7 +93,7 @@ export default function Doctor(){
     },[])
 
     return (
-      <DoctorContext.Provider value={{}}>
+      <DoctorContext.Provider value={{upcoming,setUpcoming,past}}>
         <div className="doctor-navigation" style={{ width: width }}>
           <ul>
             <li className={flags.upflag}>
