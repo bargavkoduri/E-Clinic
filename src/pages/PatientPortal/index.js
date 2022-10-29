@@ -20,6 +20,7 @@ function Patient() {
   const [marginLeft, setMarginLeft] = useState("340px");
   const { user,data,setData } = useContext(UserContext);
   const [upcoming, setUpcoming] = useState([]);
+  const [past,setPast] = useState([])
   const [doctor_data, setDData] = useState(null);
 
   function helperfun() {
@@ -35,7 +36,7 @@ function Patient() {
   }, []);
 
   return (
-    <PatientContext.Provider value={{upcoming,setUpcoming,doctor_data,setDData}}>
+    <PatientContext.Provider value={{upcoming,setUpcoming,doctor_data,setDData,past,setPast}}>
       <div className="patient-navigation" style={{ width: width }}>
         <ul>
           <li className={flags.upflag}>

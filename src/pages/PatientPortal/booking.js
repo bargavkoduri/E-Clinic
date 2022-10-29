@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { PatientContext } from ".";
-import Upcoming from "./upcoming";
 
 const Book = () => {
   const [slot, setSlot] = useState(0);
@@ -20,9 +19,9 @@ const Book = () => {
     for (let i in data1) {
       let jj = data1[i];
 
-      if (jj.id == b.target.id) {
+      if (jj.id === b.target.id) {
         for (let j in jj.slots) {
-          if (jj.slots[j].time == slot) {
+          if (jj.slots[j].time === slot) {
             jj.slots[j].avb = false;
             setUpcoming((prev) => {
                 let li = prev
@@ -33,9 +32,10 @@ const Book = () => {
                     name: data1[i].name,
                     qualification: data1[i].qualification,
                     department: data1[i].department,
+                    id : jj.id
                   },
                   status: "upcoming",
-                  id: Math.floor(Math.random() * 10000) + 1
+                  id: Math.floor(Math.random() * 10000) + 1,
                 });
                 return li
             })
@@ -144,7 +144,7 @@ const Book = () => {
                       type="button"
                       id={item.id}
                       className="btn btn-secondary btn-lg btn-block"
-                      disabled={enable[item.id - 1] == 0}
+                      disabled={enable[item.id - 1] === 0}
                       onClick={(event) => book(event)}
                     >
                       Book Appointment
