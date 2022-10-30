@@ -191,7 +191,7 @@ export default function Credential(props) {
                 style={{ textAlign: "left", paddingLeft: "3%" }}
               >
                 <input type="checkbox" onClick={() => showPassword()}></input>
-                <h6 style={{ display: "inline" }}>Show Password</h6>
+                <h6 style={{ display: "inline",marginLeft : "5px" }}>Show Password</h6>
               </div>
             </div>
           </div>

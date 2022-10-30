@@ -3,6 +3,7 @@ import { UserContext } from "../../App";
 import Display from "./display";
 import './doctor.css'
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const DoctorContext = React.createContext()
 
@@ -15,19 +16,25 @@ export default function Doctor(){
         msgflag : "doctor-list",
         pastflag : "doctor-list",
     })
-    const {user,setData} = useContext(UserContext)
+    const {user,setUser,setData} = useContext(UserContext)
     const [level,setLevel] = useState("Upcoming_Appointments")
     const [width,setWidth] = useState("300px")
     const [marginLeft,setMarginLeft] = useState("340px")
     const [upcoming, setUpcoming] = useState([]);
     const [past,setPast] = useState([])
-
+    const [msgs,setMsgs] = useState([])
+    const [Schedule,setSchedule] = useState([])
+    const navigate = useNavigate()
+    
      function helperfun() {
        axios
          .get(`http://localhost:5000/doctors?email=${user.email}`)
          .then((res) => {
            setData(res.data[0]);
+           setMsgs(res.data[0].messages)
            let initial_list = res.data[0].appointments;
+           let slots = res.data[0].timeslots
+           setSchedule(slots)
            let final_list = [];
            let final_list_1 = [];
            let d = new Date();
@@ -93,7 +100,7 @@ export default function Doctor(){
     },[])
 
     return (
-      <DoctorContext.Provider value={{upcoming,setUpcoming,past}}>
+      <DoctorContext.Provider value={{upcoming,setUpcoming,past,msgs,setMsgs,Schedule,setSchedule}}>
         <div className="doctor-navigation" style={{ width: width }}>
           <ul>
             <li className={flags.upflag}>
@@ -229,7 +236,11 @@ export default function Doctor(){
             </li>
 
             <li>
-              <div className="doctor-list-div">
+              <div className="doctor-list-div" onClick={() => {
+                navigate('/')
+                setData({})
+                setUser({ type: "", email: "", password: "" });
+              }}>
                 <span className="doctor-icon">
                   <i className="fas fa-sign-out-alt fa-fw"></i>
                 </span>

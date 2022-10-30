@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import Display from "./display";
 import { UserContext } from "../../App";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const PatientContext = React.createContext()
 
@@ -18,17 +19,19 @@ function Patient() {
   const [level, setLevel] = useState("Upcoming_Appointments");
   const [width, setWidth] = useState("300px");
   const [marginLeft, setMarginLeft] = useState("340px");
-  const { user,setData } = useContext(UserContext);
+  const { user,setUser,setData } = useContext(UserContext);
   const [upcoming, setUpcoming] = useState([]);
   const [taken,setTaken] = useState(0)
   const [past,setPast] = useState([])
   const [doctor_data, setDData] = useState([]);
-
+  const [msgs,setMsgs] = useState([])
+  const navigate = useNavigate()
   function helperfun() {
     axios
       .get(`http://localhost:5000/patients?email=${user.email}`)
       .then((res) => {
         setData(res.data[0]);
+        setMsgs(res.data[0].messages)
         let initial_list = res.data[0].appointments
         let final_list = [];
         let final_list_1 = [];
@@ -98,7 +101,7 @@ function Patient() {
   }, []);
 
   return (
-    <PatientContext.Provider value={{upcoming,setUpcoming,doctor_data,setDData,past,setPast,taken,setTaken}}>
+    <PatientContext.Provider value={{upcoming,setUpcoming,doctor_data,setDData,past,setPast,taken,setTaken,msgs,setMsgs}}>
       <div className="patient-navigation" style={{ width: width }}>
         <ul>
           <li className={flags.upflag}>
@@ -228,7 +231,11 @@ function Patient() {
             </div>
           </li>
           <li className="patient-list">
-            <div className="patient-list-div">
+            <div className="patient-list-div" onClick={() => {
+                navigate('/')
+                setData({})
+                setUser({type : "",email : "",password : ""})
+            }}>
               <span className="patient-icon">
                 <i className="fas fa-sign-out-alt fa-fw"></i>
               </span>

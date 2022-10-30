@@ -3,6 +3,7 @@ import Book from "./booking"
 import Cancel from "./cancel"
 import Past from "./Past"
 import Profile from "./Profile"
+import Message from "./message"
 
 export default function Display(props){
 
@@ -22,6 +23,6 @@ export default function Display(props){
         return <Past/>
     }
     else{
-        return <>Messages</>
+        return <Message/>
     }
 }

@@ -124,6 +124,7 @@ export default function Patient(props){
           newdata.allergies = allergies.current.value
           newdata["past_medical_history"] = past.current.value
           newdata.appointments = []
+          newdata.messages = []
           return newdata
         })
       }

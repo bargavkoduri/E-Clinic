@@ -27,59 +27,105 @@ export default function Cancel(){
       setUpcoming(temp)
     }
     return (
-      <MDBTable align="middle">
-        <MDBTableHead>
-          <tr>
-            <th scope="col">Doctor's Name</th>
-            <th scope="col">Specialist</th>
-            <th scope="col">Date</th>
-            <th scope="col">Time</th>
-            <th scope="col">Status</th>
-            <th scope="col"></th>
-          </tr>
-        </MDBTableHead>
-        <MDBTableBody>
-          {upcoming.map((appointment) => {
-            return (
-              <tr key={appointment.id}>
-                <td>
-                  <div className="ms-3">
-                    <p className="fw-bold mb-1">{appointment.doctor.name}</p>
-                    <p className="text-muted mb-0">
-                      {appointment.doctor.qualification}
+      <div style={{width : "90%"}}>
+        <h1
+          style={{
+            marginBottom: "40px",
+            marginBottom: "50px",
+            marginTop: "40px",
+          }}
+        >Cancel Appointments</h1>
+        <MDBTable align="middle">
+          <MDBTableHead>
+            <tr>
+              <th scope="col">Doctor's Name</th>
+              <th scope="col">Specialist</th>
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>
+              <th scope="col">Status</th>
+              <th scope="col"></th>
+            </tr>
+          </MDBTableHead>
+          <MDBTableBody>
+            {upcoming.map((appointment) => {
+              return (
+                <tr key={appointment.id}>
+                  <td>
+                    <div className="ms-3">
+                      <p
+                        className="fw-bold mb-1"
+                        style={{ fontWeight: "600", color: "black" }}
+                      >
+                        {appointment.doctor.name}
+                      </p>
+                      <p
+                        className="text-muted mb-0"
+                        style={{
+                          fontWeight: "500",
+                          color: "black",
+                          fontSize: "0.9rem",
+                        }}
+                      >
+                        {appointment.doctor.qualification}
+                      </p>
+                    </div>
+                  </td>
+                  <td>
+                    <p
+                      className="fw-formal"
+                      style={{ fontWeight: "450", color: "black" }}
+                    >
+                      {appointment.doctor.department}
                     </p>
-                  </div>
-                </td>
-                <td>
-                  <p className="fw-formal">
-                    {appointment.doctor.department}
-                  </p>
-                </td>
-                <td>
-                  <p className="fw-formal">
-                    {appointment.date.substring(0, 10)}
-                  </p>
-                </td>
-                <td>
-                  <p className="fw-formal">{appointment.time}</p>
-                </td>
-                <td>
-                  <MDBBadge
-                    color={
-                      appointment.status === "active" ? "success" : "warning"
-                    }
-                    pill
-                  >
-                    {appointment.status}
-                  </MDBBadge>
-                </td>
-                <td>
-                    <button type="button" disabled={appointment.status === "active"} className="btn btn-danger" style={{borderRadius : "10%",padding : "5%"}} onClick={() => cancelapp(appointment.id,appointment.doctor,appointment.time)}>Cancel</button>
-                </td>
-              </tr>
-            );
-          })}
-        </MDBTableBody>
-      </MDBTable>
+                  </td>
+                  <td>
+                    <p
+                      className="fw-formal"
+                      style={{ fontWeight: "450", color: "black" }}
+                    >
+                      {appointment.date.substring(0, 10)}
+                    </p>
+                  </td>
+                  <td>
+                    <p
+                      className="fw-formal"
+                      style={{ fontWeight: "450", color: "black" }}
+                    >
+                      {appointment.time}
+                    </p>
+                  </td>
+                  <td>
+                    <MDBBadge
+                      color={
+                        appointment.status === "active" ? "success" : "warning"
+                      }
+                      pill
+                    >
+                      {appointment.status}
+                    </MDBBadge>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      disabled={appointment.status === "active"}
+                      className="btn btn-danger"
+                      style={{ borderRadius: "10%", padding: "2%" }}
+                      onClick={() =>
+                        cancelapp(
+                          appointment.id,
+                          appointment.doctor,
+                          appointment.time
+                        )
+                      }
+                    >
+                     <span style={{fontSize : "0.8rem"}}>Cancel</span>
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </MDBTableBody>
+        </MDBTable>
+      </div>
     );
 }

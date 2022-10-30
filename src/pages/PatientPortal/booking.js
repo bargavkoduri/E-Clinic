@@ -51,7 +51,7 @@ const Book = () => {
 
     return (
       <div className="booking" id="booking">
-        <h1> Book Doctor Now! </h1>
+        <h1 style={{marginTop : "30px"}}> Book Doctor Now! </h1>
 
         <br />
         <br />
@@ -60,6 +60,7 @@ const Book = () => {
           id="Input2"
           type="text"
           placeholder="Search.."
+          style={{width : "30%",border : "1px solid black"}}
         />
         <br />
         <div className="tab1">

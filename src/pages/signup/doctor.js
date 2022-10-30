@@ -163,6 +163,76 @@ export default function Doctor(props){
                 newdata.qualification = qualification.current.value;
                 newdata.department = department.current.value;
                 newdata.experience = exp.current.value
+                newdata.slots = []
+                newdata.appointments = []
+                newdata.messages = []
+                newdata.timeslots = [
+                  {
+                    time: "09:00-09:30",
+                    available: "true",
+                    id: "1",
+                  },
+                  {
+                    time: "09:30-10:00",
+                    available: "false",
+                    id: "2",
+                  },
+                  {
+                    time: "10:00-10:30",
+                    available: "false",
+                    id: "3",
+                  },
+                  {
+                    time: "10:30-11:00",
+                    available: "false",
+                    id: "4",
+                  },
+                  {
+                    time: "11:00-11:30",
+                    available: "false",
+                    id: "5",
+                  },
+                  {
+                    time: "11:30-12:00",
+                    available: "false",
+                    id: "6",
+                  },
+                  {
+                    time: "18:30-19:00",
+                    available: "false",
+                    id: "7",
+                  },
+                  {
+                    time: "19:00-19:30",
+                    available: "false",
+                    id: "8",
+                  },
+                  {
+                    time: "19:30-20:00",
+                    available: "true",
+                    id: "9",
+                  },
+                  {
+                    time: "20:00-20:30",
+                    available: "false",
+                    id: "10",
+                  },
+                  {
+                    time: "20:30-21:00",
+                    available: "false",
+                    id: "11",
+                  },
+                  {
+                    time: "21:00-21:30",
+                    available: "false",
+                    id: "12",
+                  },
+                  {
+                    time: "21:30-22:00",
+                    available: "false",
+                    id: "13",
+                  },
+                ];
                 return newdata
             })
           }
