@@ -78,7 +78,12 @@ export default function Data(props) {
         </>
       );
   } else if (level === 3) {
-    axios.post(`http://localhost:5000/${user}s`, data);
+    if(user === "doctor"){
+      axios.post(`http://localhost:5000/dupdoctors`, data);
+    }
+    else{
+      axios.post(`http://localhost:5000/$patients`, data);
+    }
     return (
       <>
         <h2>Registration successful</h2>

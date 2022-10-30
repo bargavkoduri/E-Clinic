@@ -3,6 +3,7 @@ import Signin from './pages/signin/index'
 import Signup from './pages/signup'
 import Patient from './pages/PatientPortal';
 import Doctor from './pages/DoctorPortal';
+import Admin from './pages/admin'
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path='/patientportal' element={<Patient/>}/>
           <Route path='/doctorportal' element={<Doctor/>}></Route>
+          <Route path='/admin' element={<Admin/>}></Route>
         </Routes>
       </Router>
     </UserContext.Provider>

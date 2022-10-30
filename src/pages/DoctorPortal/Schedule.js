@@ -44,7 +44,7 @@ export default function Schedule(){
             <MDBTableHead>
               <tr>
                 <th scope="col">Time Slot</th>
-                <th scope="col">Available</th>
+                <th scope="col">Status</th>
                 <th scope="col">Add/Delete Slot</th>
               </tr>
             </MDBTableHead>
