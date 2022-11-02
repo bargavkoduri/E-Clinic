@@ -93,6 +93,12 @@ function ContactForm() {
     if(ValidateEmail(data.email) &&  temp !== true && data.name !== "" && data.query !== ""){
        axios.post(`http://localhost:5000/admin`, { ...data }).then((resp) => {
          setStatus("Successful");
+         setData({
+           name: "",
+           email: "",
+           phonenumber: "",
+           query: "",
+         });
          setTimeout(() => {
            setStatus("default");
          }, 10000);

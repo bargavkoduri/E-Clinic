@@ -298,7 +298,7 @@ export default function Doctor(props){
                     max={
                       `${d.getFullYear()}-${d.getMonth() < 10
                         ? "0"
-                        : ""}${d.getMonth()}-${d.getDate()}`
+                        : ""}${d.getMonth()}-${d.getDate()-1}`
                     }
                     ref={dob}
                   ></input>

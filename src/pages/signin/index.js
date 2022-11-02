@@ -4,7 +4,7 @@ import { useContext, useRef, useState } from "react";
 import { UserContext } from "../../App";
 import axios from "axios";
 function Index() {
-  let  {setUser} = useContext(UserContext);
+  let { setUser } = useContext(UserContext);
   let [Errmsg, setErrmsg] = useState("");
   let email = useRef();
   let password = useRef();
@@ -57,53 +57,60 @@ function Index() {
         return false;
       }
     }
-     password.current.focus();
-     password.current.style["box-shadow"] = "0 0 10px red";
-     password.current.style["background"] =
-       "url(https://assets.digitalocean.com/labs/icons/exclamation-triangle-fill.svg) no-repeat 95% 50%";
-     setTimeout(() => {
-       password.current.style["box-shadow"] = "";
-       password.current.style["background"] = "";
-     }, 5000);
+    password.current.focus();
+    password.current.style["box-shadow"] = "0 0 10px red";
+    password.current.style["background"] =
+      "url(https://assets.digitalocean.com/labs/icons/exclamation-triangle-fill.svg) no-repeat 95% 50%";
+    setTimeout(() => {
+      password.current.style["box-shadow"] = "";
+      password.current.style["background"] = "";
+    }, 5000);
     return false;
   }
 
   let logi = async (e) => {
     e.preventDefault();
     let flag = 0;
-    if(ValidateEmail(email.current.value) && ValidatePassword(password.current.value)){
-      let resp = await axios.get(`http://localhost:5000/patients?email=${email.current.value}&password=${password.current.value}`);
-      if( resp.data.length === 0){
+    if (
+      ValidateEmail(email.current.value) &&
+      ValidatePassword(password.current.value)
+    ) {
+      let resp = await axios.get(
+        `http://localhost:5000/patients?email=${email.current.value}&password=${password.current.value}`
+      );
+      if (resp.data.length === 0) {
         resp = await axios.get(
           `http://localhost:5000/doctors?email=${email.current.value}&password=${password.current.value}`
         );
         flag = 1;
       }
-      if( resp.data.length === 0){
-        setErrmsg("Invalid Login Credentials")
+      if (resp.data.length === 0) {
+        setErrmsg("Invalid Login Credentials");
         setTimeout(() => {
-          setErrmsg("")
-        },5000)
-      }
-      else{
-        if(flag === 1){
-          setUser({user : "doctor",email : email.current.value,password : password.current.value})
+          setErrmsg("");
+        }, 5000);
+      } else {
+        if (flag === 1) {
+          setUser({
+            user: "doctor",
+            email: email.current.value,
+            password: password.current.value,
+          });
           navigate("/doctorportal");
-        }
-        else{
+        } else {
           setUser({
             user: "patient",
             email: email.current.value,
             password: password.current.value,
           });
-         navigate("/patientportal")
+          navigate("/patientportal");
         }
       }
     }
   };
 
   return (
-    <section id="login" style={{height : "100vh"}}>
+    <section id="login" style={{ height: "100vh" }}>
       <div className="container-fluid signin-cont">
         <div className="card">
           <div className="row">
@@ -117,59 +124,64 @@ function Index() {
             </div>
             <div className="col-lg-6 col-md-6">
               <div className="card-body">
-                <form className="" action="/signin" method="post" onSubmit={(e) => logi(e)}>
-                  <h4>Sign Into Your Account</h4> 
-                    <div className="log">
-                      <div className="form-group">
-                        <input
-                          type="email"
-                          name="email"
-                          className="form-control"
-                          id="email"
-                          ref={email}
-                          placeholder="Email Address"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="password"
-                          name="password"
-                          className="form-control"
-                          id="password"
-                          ref={password}
-                          placeholder="Password"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <h6 style={{color : "red"}}>{Errmsg}</h6>
-                      </div>
+                <form
+                  className=""
+                  action="/signin"
+                  method="post"
+                  onSubmit={(e) => logi(e)}
+                >
+                  <h4>Sign Into Your Account</h4>
+                  <div className="log">
+                    <div className="form-group">
+                      <input
+                        type="email"
+                        name="email"
+                        className="form-control"
+                        id="email"
+                        ref={email}
+                        placeholder="Email Address"
+                      />
                     </div>
-                    <button
-                      className="btn btn-dark btn-lg btn-block"
-                      id="but"
-                      type="submit"
-                    >
-                      Login
-                    </button>
-                  </form>
-                  <div className="extra">
-                    <Link className="forgot-1" to="/forget">
-                      Forgot Password
-                    </Link>
-                    <p>
-                      Don't have a account?
-                      <Link to="/signup" className="forgot-2">
-                        {" "}
-                        Register here
-                      </Link>
-                    </p>
+                    <div className="form-group">
+                      <input
+                        type="password"
+                        name="password"
+                        className="form-control"
+                        id="password"
+                        ref={password}
+                        placeholder="Password"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <h6 style={{ color: "red" }}>{Errmsg}</h6>
+                    </div>
                   </div>
-                  <Link to="#!" className="small text-muted">
-                    Terms of use.
+                  <button
+                    className="btn btn-dark btn-lg btn-block"
+                    id="but"
+                    type="submit"
+                  >
+                    Login
+                  </button>
+                </form>
+                <div className="extra">
+                  <Link className="forgot-1" to="/forget">
+                    Forgot Password
                   </Link>
-                  <Link to="#!" className="small text-muted">
-                    Privacy policy
-                  </Link>
+
+                  <p>
+                    Don't have a account? &nbsp;
+                    <Link to="/signup" className="forgot-2">
+                      Register here
+                    </Link>
+                  </p>
+                </div>
+                <Link to="#!" className="small text-muted">
+                  Terms of use.
+                </Link>
+                <Link to="#!" className="small text-muted">
+                  Privacy policy
+                </Link>
               </div>
             </div>
           </div>

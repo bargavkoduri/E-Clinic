@@ -82,15 +82,15 @@ export default function Data(props) {
       axios.post(`http://localhost:5000/dupdoctors`, data);
     }
     else{
-      axios.post(`http://localhost:5000/$patients`, data);
+      axios.post(`http://localhost:5000/patients`, data);
     }
     return (
-      <>
+      <div style={{marginTop : "40px"}}>
         <h2>Registration successful</h2>
         <Link to="/signin">
           <h2>Click here to Login</h2>
         </Link>
-      </>
+      </div>
     );
   }
 }

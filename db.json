@@ -1,31 +1,18 @@
 {
   "patients": [
     {
-      "email": "Patient1@gmail.com",
-      "password": "Password1",
-      "name": "Nithin",
-      "aadhdarnumber": "999999999999",
-      "phonenumber": "9494949494",
-      "gender": "femlae",
-      "dob": "2022-10-05",
-      "allergies": "none",
-      "past_medical_history": "none",
-      "appointments": [],
-      "id": 3
-    },
-    {
       "email": "Patient2@gmail.com",
       "password": "Password1",
-      "name": "P Raju",
+      "name": "Royal",
       "aadhdarnumber": "939393939393",
-      "phonenumber": "9999999911",
+      "phonenumber": "9999999918",
       "gender": "male",
       "dob": "2022-10-13",
       "allergies": "none",
       "past_medical_history": "none",
       "appointments": [
         {
-          "date": "2022-10-30T17:57:58.367Z",
+          "date": "2022-11-02T17:57:58.367Z",
           "time": "21:30-22:00",
           "doctor": {
             "name": "Doctor-1",
@@ -45,6 +32,17 @@
             "id": "1"
           },
           "id": "2"
+        },
+        {
+          "date": "2022-10-31T17:57:58.367Z",
+          "time": "21:00-21:30",
+          "doctor": {
+            "name": "Doctor-1",
+            "qualification": "MBBS",
+            "department": "General Physician",
+            "id": "1"
+          },
+          "id": "1"
         }
       ],
       "messages": [
@@ -62,13 +60,27 @@
         }
       ],
       "id": 4
+    },
+    {
+      "email": "rohith@gmail.com",
+      "password": "RBpatient@20",
+      "name": "Rohith Boppey",
+      "aadhdarnumber": "353840085308",
+      "phonenumber": "9533666898",
+      "gender": "male",
+      "dob": "2002-10-20",
+      "allergies": "I'm allergic to Bargav.",
+      "past_medical_history": "Nothing.",
+      "appointments": [],
+      "messages": [],
+      "id": 5
     }
   ],
   "doctors": [
     {
       "email": "doc1@gmail.com",
       "password": "Password1",
-      "name": "Doctor-1",
+      "name": "Doctor",
       "aadhdarnumber": "949494949494",
       "phonenumber": "9090909090",
       "gender": "FeMale",
@@ -79,8 +91,24 @@
       "id": 1,
       "appointments": [
         {
-          "date": "2022-10-30T17:57:58.367Z",
+          "date": "2022-11-02T17:57:58.367Z",
           "time": "21:30-22:00",
+          "patient": {
+            "name": "Patient-1",
+            "id": "1"
+          }
+        },
+        {
+          "date": "2022-10-31T17:57:58.367Z",
+          "time": "21:00-21:30",
+          "patient": {
+            "name": "Patient-1",
+            "id": "1"
+          }
+        },
+        {
+          "date": "2022-10-30T17:57:58.367Z",
+          "time": "21:00-21:30",
           "patient": {
             "name": "Patient-1",
             "id": "1"
@@ -88,6 +116,22 @@
         }
       ],
       "slots": [
+        {
+          "time": "20:30-21:00",
+          "avb": true,
+          "details": {
+            "patient-name": "",
+            "date": ""
+          }
+        },
+        {
+          "time": "21:00-21:30",
+          "avb": true,
+          "details": {
+            "patient-name": "",
+            "date": ""
+          }
+        },
         {
           "time": "21:30-22:00",
           "avb": true,
@@ -178,20 +222,128 @@
           "id": "13"
         }
       ]
+    },
+    {
+      "email": "doc2@gmail.com",
+      "password": "Password1",
+      "name": "Doctor 2",
+      "aadhdarnumber": "123456789012",
+      "phonenumber": "1234567890",
+      "gender": "male",
+      "dob": "2004-09-17",
+      "qualification": "MBBS",
+      "department": "Dermatology",
+      "experience": "4y",
+      "slots": [
+        {
+          "time": "20:00-20:30",
+          "avb": true,
+          "details": {
+            "patient-name": "",
+            "date": ""
+          }
+        },
+        {
+          "time": "20:30-21:00",
+          "avb": true,
+          "details": {
+            "patient-name": "",
+            "date": ""
+          }
+        },
+        {
+          "time": "21:00-21:30",
+          "avb": true,
+          "details": {
+            "patient-name": "",
+            "date": ""
+          }
+        }
+      ],
+      "appointments": [],
+      "messages": [],
+      "timeslots": [
+        {
+          "time": "09:00-09:30",
+          "available": "true",
+          "id": "1"
+        },
+        {
+          "time": "09:30-10:00",
+          "available": "false",
+          "id": "2"
+        },
+        {
+          "time": "10:00-10:30",
+          "available": "false",
+          "id": "3"
+        },
+        {
+          "time": "10:30-11:00",
+          "available": "false",
+          "id": "4"
+        },
+        {
+          "time": "11:00-11:30",
+          "available": "false",
+          "id": "5"
+        },
+        {
+          "time": "11:30-12:00",
+          "available": "false",
+          "id": "6"
+        },
+        {
+          "time": "18:30-19:00",
+          "available": "false",
+          "id": "7"
+        },
+        {
+          "time": "19:00-19:30",
+          "available": "false",
+          "id": "8"
+        },
+        {
+          "time": "19:30-20:00",
+          "available": "true",
+          "id": "9"
+        },
+        {
+          "time": "20:00-20:30",
+          "available": "false",
+          "id": "10"
+        },
+        {
+          "time": "20:30-21:00",
+          "available": "false",
+          "id": "11"
+        },
+        {
+          "time": "21:00-21:30",
+          "available": "false",
+          "id": "12"
+        },
+        {
+          "time": "21:30-22:00",
+          "available": "false",
+          "id": "13"
+        }
+      ],
+      "id": 2
     }
   ],
   "dupdoctors": [
     {
-      "email": "doc2@gmail.com",
+      "email": "aalhadakate@gmail.com",
       "password": "Password1",
-      "name": "Abhinav",
-      "aadhdarnumber": "999999999999",
-      "phonenumber": "9848484848",
+      "name": "Aalhad",
+      "aadhdarnumber": "123456789012",
+      "phonenumber": "1234567890",
       "gender": "male",
-      "dob": "2004-09-09",
+      "dob": "2004-09-02",
       "qualification": "MBBS",
-      "department": "General physician",
-      "experience": "5y",
+      "department": "Gynecology",
+      "experience": "6y",
       "slots": [],
       "appointments": [],
       "messages": [],
@@ -267,18 +419,18 @@
   ],
   "admin": [
     {
-      "name": "Charan",
+      "name": "Sai Nitin",
       "email": "sainithin.g20@iiits.in",
       "phonenumber": "9494551878",
       "query": "none",
-      "id": 3
+      "id": 1
     },
     {
-      "name": "Charan",
+      "name": "Sai Nitin",
       "email": "sainithin.g20@iiits.in",
       "phonenumber": "9494551878",
-      "query": "Hello charan hsjabh udbwubduwdqw duqdiqe dfquefq efihqef qefuhqe fequfq efnoiqef ef weubfeq f we",
-      "id": 4
+      "query": "none",
+      "id": 2
     }
   ]
 }
