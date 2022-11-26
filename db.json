@@ -1,7 +1,7 @@
 {
   "patients": [
     {
-      "email": "Patient2@gmail.com",
+      "email": "ashrithroyal365@gmail.com",
       "password": "Password1",
       "name": "Royal",
       "aadhdarnumber": "939393939393",
@@ -83,7 +83,7 @@
       "name": "Doctor",
       "aadhdarnumber": "949494949494",
       "phonenumber": "9090909090",
-      "gender": "FeMale",
+      "gender": "Male",
       "dob": "2004-09-16",
       "qualification": "MBBS",
       "department": "Mental wellness",
@@ -431,6 +431,12 @@
       "phonenumber": "9494551878",
       "query": "none",
       "id": 2
+    }
+  ],
+  "admin_cred": [
+    {
+      "email": "admin@gmail.com",
+      "password": "Password1"
     }
   ]
 }

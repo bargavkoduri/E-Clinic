@@ -1,16 +1,30 @@
 import SideBar from './sidebar'
-import React from "react";
+import React, { useEffect } from "react";
+import ErrorPage from '../404page';
+import { useDispatch, useSelector } from "react-redux";
 import "./admin.css"
 
 
 function Index () {
+
+      const validauth = useSelector((state) => state.validauth)
+      const dispatch = useDispatch()
+      useEffect(() => {
+        const items = JSON.parse(localStorage.getItem('items'))
+        if(items){
+          if(items.user === "admin"){
+            dispatch({type : "setTrue"})
+          }
+        }
+      },[])
       return (
-        <>
-          <SideBar />
-          {/* <TableOne/> */}
-          {/* <TableTwo/>
-          <TableThree/> */}
-        </>
+        validauth === true ? <SideBar/> : <ErrorPage/>
+        // <>
+        //   <SideBar />
+        //   {/* <TableOne/> */}
+        //   {/* <TableTwo/>
+        //   <TableThree/> */}
+        // </>
       );
   }
   

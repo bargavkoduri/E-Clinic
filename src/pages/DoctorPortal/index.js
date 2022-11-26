@@ -3,6 +3,8 @@ import { UserContext } from "../../App";
 import Display from "./display";
 import './doctor.css'
 import axios from "axios";
+import ErrPage from '../404page'
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export const DoctorContext = React.createContext()
@@ -16,7 +18,7 @@ export default function Doctor(){
         msgflag : "doctor-list",
         pastflag : "doctor-list",
     })
-    const {user,setUser,setData} = useContext(UserContext)
+    const {setData} = useContext(UserContext)
     const [level,setLevel] = useState("Upcoming_Appointments")
     const [width,setWidth] = useState("300px")
     const [marginLeft,setMarginLeft] = useState("340px")
@@ -25,10 +27,13 @@ export default function Doctor(){
     const [msgs,setMsgs] = useState([])
     const [Schedule,setSchedule] = useState([])
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const validauth = useSelector((state) => state.validauth);
     
      function helperfun() {
+      const items = JSON.parse(localStorage.getItem('items'))
        axios
-         .get(`http://localhost:5000/doctors?email=${user.email}`)
+         .get(`http://localhost:5000/doctors?email=${items.email}`)
          .then((res) => {
            setData(res.data[0]);
            setMsgs(res.data[0].messages)
@@ -96,10 +101,17 @@ export default function Doctor(){
      }
 
     useEffect(() => {
-      helperfun();
+      const items = JSON.parse(localStorage.getItem('items'));
+      if(items){
+        if (items.user === "doctor"){
+          dispatch({ type: "setTrue" });
+          helperfun();
+        }  
+      }
     },[])
 
     return (
+      validauth === true ?
       <DoctorContext.Provider value={{upcoming,setUpcoming,past,msgs,setMsgs,Schedule,setSchedule}}>
         <div className="doctor-navigation" style={{ width: width }}>
           <ul>
@@ -239,7 +251,7 @@ export default function Doctor(){
               <div className="doctor-list-div" onClick={() => {
                 navigate('/')
                 setData({})
-                setUser({ type: "", email: "", password: "" });
+                localStorage.clear()
               }}>
                 <span className="doctor-icon">
                   <i className="fas fa-sign-out-alt fa-fw"></i>
@@ -283,6 +295,6 @@ export default function Doctor(){
             }}
           ></i>
         </div>
-      </DoctorContext.Provider>
+      </DoctorContext.Provider> : <ErrPage/>
     );
 }

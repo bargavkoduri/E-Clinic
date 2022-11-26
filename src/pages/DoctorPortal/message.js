@@ -11,36 +11,48 @@ export default function Message(){
 
     return (
       <div
-        style={{ backgroundColor: "#eee", height: "100vh", paddingTop: "30px" }}
+        style={{ backgroundColor: "#eee", height: "100vh", paddingTop: "50px" }}
         className="container-fluid"
       >
         {msgs.map((msg) => {
           return (
             <div
-              className="row"
+              className="container"
               style={{
                 paddingTop: "20px",
-                paddingBottom: "20px",
                 backgroundColor: "white",
                 borderRadius: "10px",
                 width: "70%",
-                marginLeft: "20px",
-                marginBottom: "20px",
+                marginLeft: "0px",
+                paddingBottom: "20px",
+                marginBottom: "35px",
               }}
               key={msg.id}
             >
-              <p style={{ padding: "2%", color: "black" }}>{msg.message}</p>
+              <p style={{ padding: "1%", color: "black" }}>{msg.message}</p>
 
-              <button
-                className="btn btn-success"
-                style={{
-                  color: "white",
-                  marginLeft: "700px",
-                }}
-                onClick={() => markasread(msg.id)}
-              >
-                Mark as Read
-              </button>
+              <div className="row">
+                <div className="col-8"></div>
+                <div className="col-2">
+                  <button
+                    style={{
+                      color: "white",
+                      marginLeft: "70%",
+                      width: "110px",
+                      borderRadius: "5px",
+                      border: "0px",
+                      paddingTop: "7px",
+                      backgroundColor: "#4BB543",
+                      height: "35px",
+                    }}
+                    onClick={() => markasread(msg.id)}
+                  >
+                    <p style={{ color: "white", fontSize: "15px" }}>
+                      Mark as Read
+                    </p>
+                  </button>
+                </div>
+              </div>
             </div>
           );
         })}

@@ -4,16 +4,16 @@ import Signup from './pages/signup'
 import Patient from './pages/PatientPortal';
 import Doctor from './pages/DoctorPortal';
 import Admin from './pages/admin'
+import ForgotPassword from './pages/forgotpassword'
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 export const UserContext = React.createContext()
 
 function App() {
-  const [user, setUser] = useState({ type: "", email: "", password: "" });
   const [data,setData] = useState({})
   return (
-    <UserContext.Provider value={{user,setUser,data,setData}}>
+    <UserContext.Provider value={{data,setData}}>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -22,6 +22,7 @@ function App() {
           <Route path='/patientportal' element={<Patient/>}/>
           <Route path='/doctorportal' element={<Doctor/>}></Route>
           <Route path='/admin' element={<Admin/>}></Route>
+          <Route path='/forget' element={<ForgotPassword/>}></Route>
         </Routes>
       </Router>
     </UserContext.Provider>

@@ -1,14 +1,27 @@
 import "./signin.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useRef, useState } from "react";
-import { UserContext } from "../../App";
+import {  useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 function Index() {
-  let { setUser } = useContext(UserContext);
   let [Errmsg, setErrmsg] = useState("");
   let email = useRef();
   let password = useRef();
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem('items'))
+    if(items){
+      dispatch({type : "setTrue"});
+      if(items.user === "doctor")
+        navigate("/doctorportal");
+      else if(items.user === "patient")
+        navigate("/patientportal");
+      else
+        navigate("/admin")
+    }
+  },[])
 
   function ValidateEmail(x) {
     let atposition = x.indexOf("@");
@@ -76,13 +89,18 @@ function Index() {
       ValidatePassword(password.current.value)
     ) {
       let resp = await axios.get(
-        `http://localhost:5000/patients?email=${email.current.value}&password=${password.current.value}`
-      );
+        `http://localhost:5000/patients?email=${email.current.value}&password=${password.current.value}`);
       if (resp.data.length === 0) {
         resp = await axios.get(
           `http://localhost:5000/doctors?email=${email.current.value}&password=${password.current.value}`
         );
         flag = 1;
+      }
+      if(resp.data.length === 0){
+        resp = await axios.get(
+          `http://localhost:5000/admin_cred?email=${email.current.value}&password=${password.current.value}`
+        );
+        flag = 2;
       }
       if (resp.data.length === 0) {
         setErrmsg("Invalid Login Credentials");
@@ -91,18 +109,36 @@ function Index() {
         }, 5000);
       } else {
         if (flag === 1) {
-          setUser({
-            user: "doctor",
-            email: email.current.value,
-            password: password.current.value,
-          });
+          localStorage.setItem(
+            "items",
+            JSON.stringify({
+              user: "doctor",
+              email: email.current.value,
+              // password: password.current.value,
+            })
+          );
           navigate("/doctorportal");
-        } else {
-          setUser({
-            user: "patient",
-            email: email.current.value,
-            password: password.current.value,
-          });
+        }
+        else if(flag === 2){
+          localStorage.setItem(
+            "items",
+            JSON.stringify({
+              user : "admin",
+              email : email.current.value,
+            })
+          )
+          navigate("/admin")
+          
+        }
+         else {
+          localStorage.setItem(
+            "items",
+            JSON.stringify({
+              user: "patient",
+              email: email.current.value,
+              // password: password.current.value,
+            })
+          );
           navigate("/patientportal");
         }
       }

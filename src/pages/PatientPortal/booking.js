@@ -93,7 +93,7 @@ const Book = () => {
                     }}
                   >
                     <h3 style={{ paddingRight: "10px" }}>
-                      {item.name}({item.Gender})
+                      {item.name}
                     </h3>
                     <h5>
                       {item.qualification},{item.department}

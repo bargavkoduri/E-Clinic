@@ -3,6 +3,7 @@ import TableOne from "./tableOne";
 import TableTwo from "./tableTwo";
 import TableThree from "./tableThree";
 import TableFour from "./tableFour";
+import { useNavigate } from "react-router-dom";
 
 import "./admin.css"
 export default function Sidebar() {
@@ -19,47 +20,76 @@ export default function Sidebar() {
 }
 
 function SideBarr(props) {
+     const navigate = useNavigate();
     console.log(props);
     return (
-        <>
+      <>
         <div className="sidebar">
-            <ul className="nav-list">
-                <li id="qu">
-                    <div onClick={() => props.setStatus("default")}>
-                        <i className="bi bi-question-circle-fill"></i>
-                        <span className="links_name">Queries</span>
-                    </div>
-                    <span className="tooltip">Queries</span>
-                </li>
-                <br />
-                <li id="ad">
-                    <div onClick={() => props.setStatus("successful")}>
-                        <i className="fa fa-stethoscope"></i>
-                        <span className="links_name">Accept<br />doctor</span>
-                    </div>
-                    <span className="tooltip">Accept doctor</span>
-                </li>
-                <br />
-                <li id="removeDoc">
-                    <div onClick={() => props.setStatus("successfultwo")} >
-                        <i className="fa fa-user-md"></i>
-                        <span className="links_name">Remove<br />doctor</span>
-                    </div>
-                    <span className="tooltip">Remove doctor</span>
-                </li>
-                <br />
-                <li id="removePat">
-                    <div onClick={() => props.setStatus("successfulthree")}>
-                        <i className="fa fa-wheelchair"></i>
-                        <span className="links_name">Remove<br />patient</span>
-                    </div>
-                    <span className="tooltip">Remove patient</span>
-                </li>
-                <br />
-            </ul>
+          <ul className="nav-list">
+            <li id="qu">
+              <div onClick={() => props.setStatus("default")}>
+                <i className="bi bi-question-circle-fill"></i>
+                <span className="links_name">Queries</span>
+              </div>
+              <span className="tooltip">Queries</span>
+            </li>
+            <br />
+            <li id="ad">
+              <div onClick={() => props.setStatus("successful")}>
+                <i className="fa fa-stethoscope"></i>
+                <span className="links_name">
+                  Accept
+                  <br />
+                  doctor
+                </span>
+              </div>
+              <span className="tooltip">Accept doctor</span>
+            </li>
+            <br />
+            <li id="removeDoc">
+              <div onClick={() => props.setStatus("successfultwo")}>
+                <i className="fa fa-user-md"></i>
+                <span className="links_name">
+                  Remove
+                  <br />
+                  doctor
+                </span>
+              </div>
+              <span className="tooltip">Remove doctor</span>
+            </li>
+            <br />
+            <li id="removePat">
+              <div onClick={() => props.setStatus("successfulthree")}>
+                <i className="fa fa-wheelchair"></i>
+                <span className="links_name">
+                  Remove
+                  <br />
+                  patient
+                </span>
+              </div>
+              <span className="tooltip">Remove patient</span>
+            </li>
+            <br />
+            <li id="logout">
+              <div
+                onClick={() => {
+                  localStorage.clear();
+                  navigate("/");
+                }}
+              >
+                <i className="fas fa-sign-out-alt fa-fw"></i>
+                <span className="links_name">
+                  Remove
+                  <br />
+                  patient
+                </span>
+              </div>
+              <span className="tooltip">Logout</span>
+            </li>
+          </ul>
         </div>
-        </>
-    )
+      </>
+    );
 }
 
 function Status(props) {
