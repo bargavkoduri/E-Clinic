@@ -6,6 +6,7 @@ import TableFour from "./tableFour";
 import { useNavigate } from "react-router-dom";
 
 import "./admin.css"
+import { useDispatch } from "react-redux";
 export default function Sidebar() {
   const [status,setStatus] = useState("default")
   if(status === "default"){
@@ -21,6 +22,7 @@ export default function Sidebar() {
 
 function SideBarr(props) {
      const navigate = useNavigate();
+     const dispatch = useDispatch()
     console.log(props);
     return (
       <>
@@ -57,6 +59,7 @@ function SideBarr(props) {
               </div>
               <span className="tooltip">Remove doctor</span>
             </li>
+
             <br />
             <li id="removePat">
               <div onClick={() => props.setStatus("successfulthree")}>
@@ -70,11 +73,24 @@ function SideBarr(props) {
               <span className="tooltip">Remove patient</span>
             </li>
             <br />
+            <li id="home">
+              <div
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                <i className="fa-solid fa-house"></i>
+                <span className="links_name">Home</span>
+              </div>
+              <span className="tooltip">Home</span>
+            </li>
+            <br/>
             <li id="logout">
               <div
                 onClick={() => {
                   localStorage.clear();
                   navigate("/");
+                  dispatch({ type: "setFalse" });
                 }}
               >
                 <i className="fas fa-sign-out-alt fa-fw"></i>

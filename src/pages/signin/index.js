@@ -146,7 +146,7 @@ function Index() {
   };
 
   return (
-    <section id="login" style={{ height: "100vh" }}>
+    <section id="login" style={{ height: "100vh",overflowY : "hidden" }}>
       <div className="container-fluid signin-cont">
         <div className="card">
           <div className="row">

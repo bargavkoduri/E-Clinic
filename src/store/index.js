@@ -9,6 +9,12 @@ const reducer = (state = initialstate,action) => {
             validauth : true
         }
     }
+    if(action.type === "setFalse") {
+        return {
+            ...state,
+            validauth : false
+        }
+    }
     return state
 }
 

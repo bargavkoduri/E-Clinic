@@ -110,9 +110,18 @@ export default function Doctor(){
       }
     },[])
 
-    return (
-      validauth === true ?
-      <DoctorContext.Provider value={{upcoming,setUpcoming,past,msgs,setMsgs,Schedule,setSchedule}}>
+    return validauth === true ? (
+      <DoctorContext.Provider
+        value={{
+          upcoming,
+          setUpcoming,
+          past,
+          msgs,
+          setMsgs,
+          Schedule,
+          setSchedule,
+        }}
+      >
         <div className="doctor-navigation" style={{ width: width }}>
           <ul>
             <li className={flags.upflag}>
@@ -248,11 +257,29 @@ export default function Doctor(){
             </li>
 
             <li>
-              <div className="doctor-list-div" onClick={() => {
-                navigate('/')
-                setData({})
-                localStorage.clear()
-              }}>
+              <div
+                className="doctor-list-div"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                <span className="doctor-icon">
+                  <i className="fa-solid fa-house"></i>
+                </span>
+                <span className="doctor-title">Home</span>
+              </div>
+            </li>
+
+            <li>
+              <div
+                className="doctor-list-div"
+                onClick={() => {
+                  navigate("/");
+                  setData({});
+                  localStorage.clear();
+                  dispatch({ type: "setFalse" });
+                }}
+              >
                 <span className="doctor-icon">
                   <i className="fas fa-sign-out-alt fa-fw"></i>
                 </span>
@@ -295,6 +322,8 @@ export default function Doctor(){
             }}
           ></i>
         </div>
-      </DoctorContext.Provider> : <ErrPage/>
+      </DoctorContext.Provider>
+    ) : (
+      <ErrPage />
     );
 }

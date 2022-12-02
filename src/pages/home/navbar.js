@@ -1,7 +1,18 @@
 import image from "../../assests/photo.png";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch,useSelector } from "react-redux";
+
 
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const login_state = useSelector(state => state.validauth)
+  useEffect(() => {
+    const items = localStorage.getItem("items");
+    if (items) {
+      dispatch({ type: "setTrue" });
+    }
+  }, []);
   return (
     <section id="navtitle">
       <div className="container-fluid">
@@ -41,7 +52,7 @@ export default function Navbar() {
               </li>
               <li className="nav-item">
                 <a href="/signin" className="nav-link">
-                  Login
+                  {login_state === true ? 'Your Dashboard' : 'Login'}
                 </a>
               </li>
             </ul>

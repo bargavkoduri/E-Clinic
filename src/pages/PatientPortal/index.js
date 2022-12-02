@@ -113,9 +113,21 @@ function Patient() {
     }
   }, []);
 
-  return (
-    validauth === true ?
-    <PatientContext.Provider value={{upcoming,setUpcoming,doctor_data,setDData,past,setPast,taken,setTaken,msgs,setMsgs}}>
+  return validauth === true ? (
+    <PatientContext.Provider
+      value={{
+        upcoming,
+        setUpcoming,
+        doctor_data,
+        setDData,
+        past,
+        setPast,
+        taken,
+        setTaken,
+        msgs,
+        setMsgs,
+      }}
+    >
       <div className="patient-navigation" style={{ width: width }}>
         <ul>
           <li className={flags.upflag}>
@@ -181,6 +193,7 @@ function Patient() {
               <span className="patient-title">Book Appointments</span>
             </div>
           </li>
+
           <li className={flags.capflag}>
             <div
               className="patient-list-div"
@@ -202,6 +215,7 @@ function Patient() {
               <span className="patient-title">Cancel Appointments</span>
             </div>
           </li>
+
           <li className={flags.papflag}>
             <div
               className="patient-list-div"
@@ -223,6 +237,7 @@ function Patient() {
               <span className="patient-title">Past Appointments</span>
             </div>
           </li>
+
           <li className={flags.msgflag}>
             <div
               className="patient-list-div"
@@ -244,12 +259,31 @@ function Patient() {
               <span className="patient-title">Messages</span>
             </div>
           </li>
+
           <li className="patient-list">
-            <div className="patient-list-div" onClick={() => {
-                navigate('/')
-                setData({})
-                localStorage.clear()
-            }}>
+            <div
+              className="patient-list-div"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              <span className="patient-icon">
+                <i className="fa-solid fa-house"></i>
+              </span>
+              <span className="patient-title">Home</span>
+            </div>
+          </li>
+
+          <li className="patient-list">
+            <div
+              className="patient-list-div"
+              onClick={() => {
+                navigate("/");
+                setData({});
+                localStorage.clear();
+                dispatch({ type: "setFalse" });
+              }}
+            >
               <span className="patient-icon">
                 <i className="fas fa-sign-out-alt fa-fw"></i>
               </span>
@@ -290,7 +324,9 @@ function Patient() {
           }}
         ></i>
       </div>
-    </PatientContext.Provider> : <ErrPage/>
+    </PatientContext.Provider>
+  ) : (
+    <ErrPage />
   );
 }
 
