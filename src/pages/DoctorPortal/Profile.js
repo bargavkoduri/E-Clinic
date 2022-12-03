@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useContext, useRef } from "react";
 import { UserContext } from "../../App";
+import Swal from "sweetalert2";
 
 export default function Profile() {
   const {data,setData} = useContext(UserContext)
@@ -51,7 +52,22 @@ export default function Profile() {
        }, 3000);
     }
     if(tempa !== true && tempp !== true){
-      axios.patch(`http://localhost:5000/doctors/${data.id}`, { ...data });
+      axios.patch(`http://localhost:5000/doctors/${data.id}`, { ...data }).then(resp => {
+        if(resp.status === 200){
+          Swal.fire({
+            icon: "success",
+            title: "Info updated successfully",
+          });
+        }
+        else{
+          Swal.fire({
+            icon: "error",
+            title: "Unable to update info",
+          });
+          window.location.reload(false)
+        }
+      }
+      )
     }
   }
 

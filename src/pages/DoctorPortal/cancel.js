@@ -6,6 +6,7 @@ import {
   MDBTableBody,
 } from "mdb-react-ui-kit";
 import { useContext } from "react";
+import Swal from "sweetalert2";
 
 export default function Cancel(){
     const {upcoming,setUpcoming} = useContext(DoctorContext)
@@ -13,6 +14,10 @@ export default function Cancel(){
     const cap = (id) => {
         let temp = upcoming.filter(app => app.id !== id)
         setUpcoming(temp)
+        Swal.fire({
+          icon: "success",
+          title: "Appointment Cancelled",
+        });
     }
 
     return (

@@ -80,7 +80,7 @@
     {
       "email": "doc1@gmail.com",
       "password": "Password1",
-      "name": "Doctor",
+      "name": "Sai Nithin",
       "aadhdarnumber": "949494949494",
       "phonenumber": "9090909090",
       "gender": "Male",
@@ -163,7 +163,7 @@
         },
         {
           "time": "09:30-10:00",
-          "available": "false",
+          "available": "true",
           "id": "2"
         },
         {

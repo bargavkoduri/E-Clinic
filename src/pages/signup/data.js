@@ -30,7 +30,7 @@ export default function Data(props) {
                   setLevel(1);
                 }}
               >
-                <i className="fas fa-user-injured "></i>Patient
+                <i className="fas fa-user-injured "></i>&nbsp;&nbsp;Patient
               </button>
             </div>
             <div className="col-6">
@@ -41,7 +41,7 @@ export default function Data(props) {
                   setLevel(1);
                 }}
               >
-                <i className="fas fa-user-md "></i>Doctor
+                <i className="fas fa-user-md "></i>&nbsp;&nbsp;Doctor
               </button>
             </div>
           </div>

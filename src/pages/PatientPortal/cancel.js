@@ -6,6 +6,7 @@ import {
   MDBTableBody,
 } from "mdb-react-ui-kit";
 import { useContext } from "react";
+import Swal from "sweetalert2";
 
 
 export default function Cancel(){
@@ -25,6 +26,10 @@ export default function Cancel(){
       }
       setDData(temp_doctor_data)
       setUpcoming(temp)
+      Swal.fire({
+        icon: "success",
+        title: "Appointment Cancelled",
+      });
     }
     return (
       <div style={{width : "90%"}}>

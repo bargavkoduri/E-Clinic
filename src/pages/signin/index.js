@@ -9,6 +9,7 @@ function Index() {
   let password = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch()
+  const [view ,setView] = useState("-slash");
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('items'))
@@ -22,6 +23,17 @@ function Index() {
         navigate("/admin")
     }
   },[])
+
+  const showPass = () => {
+    if(view === "-slash"){
+      setView("");
+      password.current.type = "text"
+    }
+    else{
+      setView("-slash")
+      password.current.type = "password"
+    }
+  }
 
   function ValidateEmail(x) {
     let atposition = x.indexOf("@");
@@ -61,22 +73,16 @@ function Index() {
       else {
         password.current.focus();
         password.current.style["box-shadow"] = "0 0 10px red";
-        password.current.style["background"] =
-          "url(https://assets.digitalocean.com/labs/icons/exclamation-triangle-fill.svg) no-repeat 95% 50%";
         setTimeout(() => {
           password.current.style["box-shadow"] = "";
-          password.current.style["background"] = "";
         }, 5000);
         return false;
       }
     }
     password.current.focus();
     password.current.style["box-shadow"] = "0 0 10px red";
-    password.current.style["background"] =
-      "url(https://assets.digitalocean.com/labs/icons/exclamation-triangle-fill.svg) no-repeat 95% 50%";
     setTimeout(() => {
       password.current.style["box-shadow"] = "";
-      password.current.style["background"] = "";
     }, 5000);
     return false;
   }
@@ -146,7 +152,7 @@ function Index() {
   };
 
   return (
-    <section id="login" style={{ height: "100vh",overflowY : "hidden" }}>
+    <section id="login" style={{ height: "100vh", overflowY: "hidden" }}>
       <div className="container-fluid signin-cont">
         <div className="card">
           <div className="row">
@@ -187,6 +193,9 @@ function Index() {
                         ref={password}
                         placeholder="Password"
                       />
+                      <div onClick={() => showPass()}>
+                      <i className={`fa-solid fa-eye${view} input-icons-i`} style={{position : "absolute",top : "38%",right : "14%"}}></i>
+                      </div>
                     </div>
                     <div className="form-group">
                       <h6 style={{ color: "red" }}>{Errmsg}</h6>

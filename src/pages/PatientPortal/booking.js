@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { PatientContext } from ".";
+import Swal from "sweetalert2";
 
 const Book = () => {
   const [slot, setSlot] = useState(0);
@@ -11,7 +12,6 @@ const Book = () => {
     let alt = Array(doctor_data.length).fill(0);
     alt[b.target.value - 1] = 1;
     setSlot(b.target.innerText);
-
     setEnable(alt);
   };
   const book = (b) => {
@@ -41,6 +41,10 @@ const Book = () => {
           }
         }
       }
+      Swal.fire({
+        icon: "success",
+        title: "Appointment booked successfully",
+      });
     }
     setDData(data1)
     setV(re+1)
