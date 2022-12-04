@@ -9,7 +9,7 @@ function Index() {
   let password = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch()
-  const [view ,setView] = useState("-slash");
+  const [view ,setView] = useState("");
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('items'))
@@ -25,12 +25,12 @@ function Index() {
   },[])
 
   const showPass = () => {
-    if(view === "-slash"){
-      setView("");
+    if(view === ""){
+      setView("-slash");
       password.current.type = "text"
     }
     else{
-      setView("-slash")
+      setView("")
       password.current.type = "password"
     }
   }

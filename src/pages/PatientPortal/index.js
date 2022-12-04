@@ -128,7 +128,10 @@ function Patient() {
         setMsgs,
       }}
     >
-      <div className="patient-navigation" style={{ width: width }}>
+      <div
+        className="patient-navigation"
+        style={{ width: width }}
+      >
         <ul>
           <li className={flags.upflag}>
             <div

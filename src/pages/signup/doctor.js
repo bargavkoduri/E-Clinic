@@ -14,7 +14,7 @@ export default function Doctor(props){
     const exp = useRef("")
 
     const helperfun = (x, num) => {
-      if (x.length > 0 && x.length < num) return true;
+      if ((x.length > 0 && x.length < num) || x.length > num) return true;
       if (x.length > 0) {
         for (let i = 0; i < num; i++) {
           if (x[i] < "0" && x[i] > "9") return true;
@@ -233,6 +233,7 @@ export default function Doctor(props){
                     id: "13",
                   },
                 ];
+                newdata.charges = 500;
                 return newdata
             })
           }

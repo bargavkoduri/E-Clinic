@@ -8,6 +8,7 @@ const Book = () => {
   const [enable, setEnable] = useState([]);
   const [re,setV] = useState(0)
   const { doctor_data, setDData,setUpcoming } = useContext(PatientContext);
+  const [search,setSearch] = useState("")
   const shoot = (b) => {
     let alt = Array(doctor_data.length).fill(0);
     alt[b.target.value - 1] = 1;

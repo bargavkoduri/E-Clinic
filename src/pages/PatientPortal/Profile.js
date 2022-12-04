@@ -1,10 +1,16 @@
 import axios from "axios";
-import { useContext, useRef } from "react";
+import { useContext, useRef,useState } from "react";
 import { UserContext } from "../../App";
 import Swal from "sweetalert2";
 
 export default function Profile() {
   const { data, setData } = useContext(UserContext);
+  const [view, setView] = useState("");
+    const aadharnumber = useRef();
+    const phonenumber = useRef();
+    const password = useRef();
+    const name = useRef();
+
   const handler = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -20,13 +26,60 @@ export default function Profile() {
     return true;
   };
 
-  const aadharnumber = useRef();
-  const phonenumber = useRef();
+  const validateName = (name1) => {
+    name1 = name1.replace(/ /g, "");
+    if (name1.length >= 1) {
+      return false;
+    }
+    return true;
+  };
+
+
+  function ValidatePassword(x) {
+    if (x.length >= 8) {
+      let bigchar = 0;
+      let smallchar = 0;
+      let numeric = 0;
+      for (let i = 0; i < x.length; i++) {
+        if (x[i] >= "0" && x[i] <= "9") numeric += 1;
+        else if (x[i] >= "a" && x[i] <= "z") smallchar += 1;
+        else if (x[i] >= "A" && x[i] <= "Z") bigchar += 1;
+      }
+      if (bigchar >= 1 && smallchar >= 1 && numeric >= 1) return true;
+      else {
+        password.current.focus();
+        password.current.style["box-shadow"] = "0 0 10px red";
+        setTimeout(() => {
+          password.current.style["box-shadow"] = "";
+        }, 5000);
+        return false;
+      }
+    }
+    password.current.focus();
+    password.current.style["box-shadow"] = "0 0 10px red";
+    setTimeout(() => {
+      password.current.style["box-shadow"] = "";
+    }, 5000);
+    return false;
+  }
+
+   const showPass = () => {
+     if (view === "") {
+       setView("-slash");
+       password.current.type = "text";
+     } else {
+       setView("");
+       password.current.type = "password";
+     }
+   };
+
 
   const submithandler = (e) => {
     e.preventDefault();
     let tempp = validate(data.phonenumber, 10);
     let tempa = validate(data.aadhdarnumber, 12);
+    let temppass = ValidatePassword(data.password);
+    let tempname = validateName(data.name)
     if (tempp === true) {
       phonenumber.current.focus();
       phonenumber.current.style["box-shadow"] = "0 0 10px red";
@@ -47,7 +100,17 @@ export default function Profile() {
         aadharnumber.current.style["background"] = "";
       }, 3000);
     }
-    if (tempa !== true && tempp !== true) {
+    if(tempname === true){
+      name.current.focus();
+      name.current.style["box-shadow"] = "0 0 10px red";
+      name.current.style["background"] =
+        "url(https://assets.digitalocean.com/labs/icons/exclamation-triangle-fill.svg) no-repeat 95% 50%";
+      setTimeout(() => {
+        name.current.style["box-shadow"] = "";
+        name.current.style["background"] = "";
+      }, 3000);
+    }
+    if (tempa !== true && tempp !== true &&  temppass === true && tempname !== true) {
       axios.patch(`http://localhost:5000/patients/${data.id}`, { ...data }).then(resp => {
         if (resp.status === 200) {
           Swal.fire({
@@ -69,7 +132,7 @@ export default function Profile() {
     <div
       className="container-fluid"
       style={{
-        backgroundColor: "#eee",
+        // backgroundColor: "#eee",
         height: "97vh",
         width: "100%",
       }}
@@ -126,7 +189,7 @@ export default function Profile() {
                   paddingRight: "30px",
                   paddingLeft: "50px",
                   borderRadius: "10px",
-                  marginLeft : "30px"
+                  marginLeft: "30px",
                 }}
               >
                 <h2
@@ -156,6 +219,7 @@ export default function Profile() {
                             className="form-control"
                             value={data.name}
                             name="name"
+                            ref={name}
                             onChange={(e) => handler(e)}
                           ></input>
                         </div>
@@ -245,13 +309,12 @@ export default function Profile() {
                         </div>
                       </div>
                     </div>
-                    <br />
                     <div className="col-6">
                       <div className="row">
                         <label style={{ fontWeight: "450" }}>Allergies</label>
                         <textarea
                           className="form-control"
-                          style={{ height: "125px", width: "550px" }}
+                          style={{ height: "95px", width: "550px" }}
                           value={data.allergies}
                           name="allergies"
                           onChange={(e) => handler(e)}
@@ -264,11 +327,42 @@ export default function Profile() {
                         </label>
                         <textarea
                           className="form-control"
-                          style={{ height: "125px", width: "550px" }}
+                          style={{ height: "95px", width: "550px" }}
                           value={data.past_medical_history}
                           name="past_medical_history"
                           onChange={(e) => handler(e)}
                         ></textarea>
+                      </div>
+                      <br />
+                      <div className="row">
+                        <div className="col-3">
+                          <label
+                            className="col-form-label"
+                            style={{ fontWeight: "450" }}
+                          >
+                            Password
+                          </label>
+                        </div>
+                        <div className="col-8">
+                          <input
+                            type="password"
+                            className="form-control"
+                            name="password"
+                            value={data.password}
+                            ref={password}
+                            onChange={(e) => handler(e)}
+                          ></input>
+                        </div>
+                        <div onClick={() => showPass()}>
+                          <i
+                            className={`fa-solid fa-eye${view} input-icons-i`}
+                            style={{
+                              position: "absolute",
+                              top: "92%",
+                              right: "14%",
+                            }}
+                          ></i>
+                        </div>
                       </div>
                     </div>
                   </div>

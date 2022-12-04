@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useRef } from "react";
+import { useContext, useRef,useState } from "react";
 import { UserContext } from "../../App";
 import Swal from "sweetalert2";
 
@@ -8,6 +8,10 @@ export default function Profile() {
   let d = new Date();
   const phonenumber = useRef()
   const aadharnumber = useRef()
+  const password = useRef()
+  const name = useRef()
+  const charges = useRef()
+  const [view, setView] = useState("");
 
   d.setFullYear(d.getFullYear() - 18);
   const handle = (e) => {
@@ -16,8 +20,18 @@ export default function Profile() {
     setData({...data,[e.target.name] : e.target.value})
   }
 
+  const validateName = (name1) => {
+    name1 = name1.replace(/ /g, "");
+    console.log(name1);
+    if (name1.length >= 1) {
+      return false;
+    }
+    return true;
+  };
+
+
   const validate = (x, num) => {
-    if (x.length > 0 && x.length < num) return true;
+    if ( (x.length > 0 && x.length < num) || x.length > num) return true;
     if (x.length > 0) {
       for (let i = 0; i < num; i++) {
         if (x[i] < "0" && x[i] > "9") return true;
@@ -27,10 +41,59 @@ export default function Profile() {
     return true;
   };
 
+  const showPass = () => {
+    if (view === "") {
+      setView("-slash");
+      password.current.type = "text";
+    } else {
+      setView("");
+      password.current.type = "password";
+    }
+  };
+
+   function validateFee(fee1) {
+     for (let i = 0; i < fee1.length; i++) {
+       if (fee1[i] < "1" && fee1[i] > "9") return true;
+       return false;
+     }
+   }
+
+
+  function ValidatePassword(x) {
+    if (x.length >= 8) {
+      let bigchar = 0;
+      let smallchar = 0;
+      let numeric = 0;
+      for (let i = 0; i < x.length; i++) {
+        if (x[i] >= "0" && x[i] <= "9") numeric += 1;
+        else if (x[i] >= "a" && x[i] <= "z") smallchar += 1;
+        else if (x[i] >= "A" && x[i] <= "Z") bigchar += 1;
+      }
+      if (bigchar >= 1 && smallchar >= 1 && numeric >= 1) return true;
+      else {
+        password.current.focus();
+        password.current.style["box-shadow"] = "0 0 10px red";
+        setTimeout(() => {
+          password.current.style["box-shadow"] = "";
+        }, 5000);
+        return false;
+      }
+    }
+    password.current.focus();
+    password.current.style["box-shadow"] = "0 0 10px red";
+    setTimeout(() => {
+      password.current.style["box-shadow"] = "";
+    }, 3000);
+    return false;
+  }
+
   const handlesubmit = (e) => {
     e.preventDefault()
     let tempp = validate(data.phonenumber,10)
     let tempa = validate(data.aadhdarnumber,12)
+    let temppass = ValidatePassword(data.password)
+    let tempname = validateName(data.name)
+    let tempcharges = validateFee(data.charges)
     if(tempp === true){
       phonenumber.current.focus();
       phonenumber.current.style["box-shadow"] = "0 0 10px red";
@@ -51,7 +114,27 @@ export default function Profile() {
          aadharnumber.current.style["background"] = "";
        }, 3000);
     }
-    if(tempa !== true && tempp !== true){
+    if (tempname === true) {
+      name.current.focus();
+      name.current.style["box-shadow"] = "0 0 10px red";
+      name.current.style["background"] =
+        "url(https://assets.digitalocean.com/labs/icons/exclamation-triangle-fill.svg) no-repeat 95% 50%";
+      setTimeout(() => {
+        name.current.style["box-shadow"] = "";
+        name.current.style["background"] = "";
+      }, 3000);
+    }
+    if(tempcharges === true) {
+      charges.current.focus();
+      charges.current.style["box-shadow"] = "0 0 10px red";
+      charges.current.style["background"] =
+        "url(https://assets.digitalocean.com/labs/icons/exclamation-triangle-fill.svg) no-repeat 95% 50%";
+      setTimeout(() => {
+        charges.current.style["box-shadow"] = "";
+        charges.current.style["background"] = "";
+      }, 3000);
+    }
+    if(tempa !== true && tempp !== true && temppass === true && tempname !== true && tempcharges !== true){
       axios.patch(`http://localhost:5000/doctors/${data.id}`, { ...data }).then(resp => {
         if(resp.status === 200){
           Swal.fire({
@@ -75,7 +158,7 @@ export default function Profile() {
     <div
       className="container-fluid"
       style={{
-        backgroundColor: "#eee",
+        // backgroundColor: "#eee",
         height: "97vh",
         width: "100%",
       }}
@@ -86,7 +169,7 @@ export default function Profile() {
             style={{
               border: "1px solid black",
               backgroundColor: "white",
-              height: "350px",
+              height: "370px",
               width: "220px",
               paddingTop: "20px",
               marginTop: "40px",
@@ -125,13 +208,13 @@ export default function Profile() {
                 style={{
                   border: "1px solid black",
                   backgroundColor: "white",
-                  height: "590px",
+                  height: "650px",
                   marginTop: "40px",
                   boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px",
                   paddingRight: "15px",
                   paddingLeft: "50px",
                   borderRadius: "10px",
-                  marginLeft : "30px"
+                  marginLeft: "30px",
                 }}
               >
                 <h2
@@ -161,6 +244,7 @@ export default function Profile() {
                             className="form-control"
                             value={data.name}
                             name="name"
+                            ref={name}
                             onChange={(e) => handle(e)}
                           ></input>
                         </div>
@@ -227,8 +311,42 @@ export default function Profile() {
                             onChange={(e) => handle(e)}
                             max={`${d.getFullYear()}-${
                               d.getMonth() < 10 ? "0" : ""
-                            }${d.getMonth()}-${d.getDate()}`}
+                            }${d.getMonth()}-${
+                              d.getDate().toString().length === 1 ? "0" : ""
+                            }${d.getDate()}`}
                           ></input>
+                        </div>
+                      </div>
+                      <br />
+                      <br />
+                      <div className="row">
+                        <div className="col-3">
+                          <label
+                            className="col-form-label"
+                            style={{ fontWeight: "450" }}
+                          >
+                            Password
+                          </label>
+                        </div>
+                        <div className="col-8">
+                          <input
+                            type="password"
+                            className="form-control"
+                            name="password"
+                            value={data.password}
+                            ref={password}
+                            onChange={(e) => handle(e)}
+                          ></input>
+                        </div>
+                        <div onClick={() => showPass()}>
+                          <i
+                            className={`fa-solid fa-eye${view} input-icons-i`}
+                            style={{
+                              position: "absolute",
+                              top: "87%",
+                              right: "14%",
+                            }}
+                          ></i>
                         </div>
                       </div>
                       <br />
@@ -326,6 +444,28 @@ export default function Profile() {
                             <option value="Male">Male</option>
                             <option value="FeMale">Female</option>
                           </select>
+                        </div>
+                      </div>
+                      <br />
+                      <br />
+                      <div className="row">
+                        <div className="col-3">
+                          <label
+                            className="col-form-label"
+                            style={{ fontWeight: "450" }}
+                          >
+                            Charges
+                          </label>
+                        </div>
+                        <div className="col-8">
+                          <input
+                            className="form-control"
+                            value={data.charges}
+                            name="charges"
+                            onChange={(e) => handle(e)}
+                            style={{ fontWeight: "450" }}
+                            ref={charges}
+                          />
                         </div>
                       </div>
                     </div>

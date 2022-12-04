@@ -79,16 +79,17 @@
   "doctors": [
     {
       "email": "doc1@gmail.com",
-      "password": "Password1",
-      "name": "Sai Nithin",
+      "password": "Password123",
+      "name": "Royal",
       "aadhdarnumber": "949494949494",
       "phonenumber": "9090909090",
       "gender": "Male",
-      "dob": "2004-09-16",
+      "dob": "2004-11-04",
       "qualification": "MBBS",
       "department": "Mental wellness",
       "experience": "7y",
       "id": 1,
+      "charges": "600",
       "appointments": [
         {
           "date": "2022-11-02T17:57:58.367Z",
@@ -329,6 +330,7 @@
           "id": "13"
         }
       ],
+      "charges": 500,
       "id": 2
     }
   ],
