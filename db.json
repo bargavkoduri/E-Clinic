@@ -1,9 +1,9 @@
 {
   "patients": [
     {
-      "email": "ashrithroyal365@gmail.com",
-      "password": "Password1",
-      "name": "Royal",
+      "email": "gubbasainithin@gmail.com",
+      "password": "Password1234",
+      "name": "Sai Nithin",
       "aadhdarnumber": "939393939393",
       "phonenumber": "9999999918",
       "gender": "male",
@@ -79,7 +79,7 @@
   "doctors": [
     {
       "email": "doc1@gmail.com",
-      "password": "Password123",
+      "password": "Password1234",
       "name": "Royal",
       "aadhdarnumber": "949494949494",
       "phonenumber": "9090909090",

@@ -44,9 +44,6 @@ export default function OTP(props){
   },[otp])
 
   const submithandler = () => {
-    console.log("called")
-    console.log(otp_input.current.value)
-    console.log(otp)
     if(otp_input.current.value == otp){
       props.setLevel((prev) => {
         return prev+1;

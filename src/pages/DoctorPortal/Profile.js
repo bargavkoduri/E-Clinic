@@ -9,9 +9,11 @@ export default function Profile() {
   const phonenumber = useRef()
   const aadharnumber = useRef()
   const password = useRef()
+  const password1 = useRef();
   const name = useRef()
   const charges = useRef()
   const [view, setView] = useState("");
+  const [view1, setView1] = useState(""); 
 
   d.setFullYear(d.getFullYear() - 18);
   const handle = (e) => {
@@ -28,6 +30,35 @@ export default function Profile() {
     }
     return true;
   };
+
+  function ValidatePassword(x, pass) {
+    if (x.length >= 8) {
+      let bigchar = 0;
+      let smallchar = 0;
+      let numeric = 0;
+      for (let i = 0; i < x.length; i++) {
+        if (x[i] >= "0" && x[i] <= "9") numeric += 1;
+        else if (x[i] >= "a" && x[i] <= "z") smallchar += 1;
+        else if (x[i] >= "A" && x[i] <= "Z") bigchar += 1;
+      }
+      if (bigchar >= 1 && smallchar >= 1 && numeric >= 1) return true;
+      else {
+        pass.current.focus();
+        pass.current.style["box-shadow"] = "0 0 10px red";
+        setTimeout(() => {
+          pass.current.style["box-shadow"] = "";
+        }, 3000);
+        return false;
+      }
+    }
+    pass.current.focus();
+    pass.current.style["box-shadow"] = "0 0 10px red";
+    setTimeout(() => {
+      pass.current.style["box-shadow"] = "";
+    }, 3000);
+    return false;
+  }
+
 
 
   const validate = (x, num) => {
@@ -51,47 +82,29 @@ export default function Profile() {
     }
   };
 
+  const showPass1 = () => {
+    if (view1 === "") {
+      setView1("-slash");
+      password1.current.type = "text";
+    } else {
+      setView1("");
+      password1.current.type = "password";
+    }
+  };
+
    function validateFee(fee1) {
+    if(fee1.length === 0)
+      return true
      for (let i = 0; i < fee1.length; i++) {
        if (fee1[i] < "1" && fee1[i] > "9") return true;
        return false;
      }
    }
 
-
-  function ValidatePassword(x) {
-    if (x.length >= 8) {
-      let bigchar = 0;
-      let smallchar = 0;
-      let numeric = 0;
-      for (let i = 0; i < x.length; i++) {
-        if (x[i] >= "0" && x[i] <= "9") numeric += 1;
-        else if (x[i] >= "a" && x[i] <= "z") smallchar += 1;
-        else if (x[i] >= "A" && x[i] <= "Z") bigchar += 1;
-      }
-      if (bigchar >= 1 && smallchar >= 1 && numeric >= 1) return true;
-      else {
-        password.current.focus();
-        password.current.style["box-shadow"] = "0 0 10px red";
-        setTimeout(() => {
-          password.current.style["box-shadow"] = "";
-        }, 5000);
-        return false;
-      }
-    }
-    password.current.focus();
-    password.current.style["box-shadow"] = "0 0 10px red";
-    setTimeout(() => {
-      password.current.style["box-shadow"] = "";
-    }, 3000);
-    return false;
-  }
-
   const handlesubmit = (e) => {
     e.preventDefault()
     let tempp = validate(data.phonenumber,10)
     let tempa = validate(data.aadhdarnumber,12)
-    let temppass = ValidatePassword(data.password)
     let tempname = validateName(data.name)
     let tempcharges = validateFee(data.charges)
     if(tempp === true){
@@ -134,7 +147,7 @@ export default function Profile() {
         charges.current.style["background"] = "";
       }, 3000);
     }
-    if(tempa !== true && tempp !== true && temppass === true && tempname !== true && tempcharges !== true){
+    if(tempa !== true && tempp !== true && tempname !== true && tempcharges !== true){
       axios.patch(`http://localhost:5000/doctors/${data.id}`, { ...data }).then(resp => {
         if(resp.status === 200){
           Swal.fire({
@@ -153,6 +166,36 @@ export default function Profile() {
       )
     }
   }
+
+  const submithandler1 = () => {
+    if (
+      ValidatePassword(password.current.value, password) &&
+      ValidatePassword(password1.current.value, password1) &&
+      password.current.value === data.password
+    ) {
+      axios
+        .patch(`http://localhost:5000/doctors/${data.id}`, {
+          password: password1.current.value,
+        })
+        .then(() => {
+          password.current.value = "";
+          password1.current.value = "";
+          Swal.fire({
+            icon: "success",
+            title: "Password updated successfully",
+          });
+          window.location.reload(false);
+        });
+    } else if (
+      ValidatePassword(password.current.value, password) &&
+      ValidatePassword(password1.current.value, password1)
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Current Password doesn't match",
+      });
+    }
+  };
 
   return (
     <div
@@ -208,7 +251,7 @@ export default function Profile() {
                 style={{
                   border: "1px solid black",
                   backgroundColor: "white",
-                  height: "650px",
+                  height: "550px",
                   marginTop: "40px",
                   boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px",
                   paddingRight: "15px",
@@ -317,39 +360,6 @@ export default function Profile() {
                           ></input>
                         </div>
                       </div>
-                      <br />
-                      <br />
-                      <div className="row">
-                        <div className="col-3">
-                          <label
-                            className="col-form-label"
-                            style={{ fontWeight: "450" }}
-                          >
-                            Password
-                          </label>
-                        </div>
-                        <div className="col-8">
-                          <input
-                            type="password"
-                            className="form-control"
-                            name="password"
-                            value={data.password}
-                            ref={password}
-                            onChange={(e) => handle(e)}
-                          ></input>
-                        </div>
-                        <div onClick={() => showPass()}>
-                          <i
-                            className={`fa-solid fa-eye${view} input-icons-i`}
-                            style={{
-                              position: "absolute",
-                              top: "87%",
-                              right: "14%",
-                            }}
-                          ></i>
-                        </div>
-                      </div>
-                      <br />
                     </div>
                     <div className="col-6">
                       <div className="row">
@@ -389,37 +399,6 @@ export default function Profile() {
                             value={data.department}
                             readOnly
                           ></input>
-                        </div>
-                      </div>
-                      <br />
-                      <br />
-                      <div className="row">
-                        <div className="col-3">
-                          <label
-                            className="col-form-label"
-                            style={{ fontWeight: "450" }}
-                          >
-                            Experience
-                          </label>
-                        </div>
-                        <div className="col-8">
-                          <select
-                            type="text"
-                            className="form-control"
-                            name="experience"
-                            value={data.experience}
-                            onChange={(e) => handle(e)}
-                          >
-                            <option value="1y">1 Y</option>
-                            <option value="2y">2 Y</option>
-                            <option value="3y">3 Y</option>
-                            <option value="4y">4 Y </option>
-                            <option value="5y">5 Y</option>
-                            <option value="6y">6 Y</option>
-                            <option value="7y">7 Y</option>
-                            <option value="8y">8 Y</option>
-                            <option value="8y+">8+ Y</option>
-                          </select>
                         </div>
                       </div>
                       <br />
@@ -488,6 +467,89 @@ export default function Profile() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+     <div className="row">
+        <div
+          style={{
+            border: "1px solid black",
+            backgroundColor: "white",
+            height: "260px",
+            width : "88%",
+            display: "inline-block",
+            marginRight: "0px",
+            paddingTop: "20px",
+            marginBottom: "50px",
+            marginTop: "40px",
+            boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px",
+            borderRadius: "10px",
+          }}
+        >
+          <h2>Update Password</h2>
+          <br />
+          <div className="row" style={{ marginTop: "10px" }}>
+            <div className="col-2" style={{ marginLeft: "20px" }}>
+              <label className="col-form-label" style={{ fontWeight: "450" }}>
+                Current Password
+              </label>
+            </div>
+            <div className="col-3">
+              <input
+                className="form-control"
+                ref={password}
+                name="password"
+                type="password"
+              ></input>
+              <div onClick={() => showPass()}>
+                <i
+                  className={`fa-solid fa-eye${view} input-icons-i`}
+                  style={{
+                    position: "absolute",
+                    top: "30%",
+                    right: "7%",
+                  }}
+                ></i>
+              </div>
+            </div>
+            <div className="col-1"></div>
+            <div className="col-2">
+              <label className="col-form-label" style={{ fontWeight: "450" }}>
+                New Password
+              </label>
+            </div>
+            <div className="col-3">
+              <input
+                className="form-control"
+                ref={password1}
+                type="password"
+              ></input>
+              <div onClick={() => showPass1()}>
+                <i
+                  className={`fa-solid fa-eye${view1} input-icons-i`}
+                  style={{
+                    position: "absolute",
+                    top: "30%",
+                    right: "7%",
+                  }}
+                ></i>
+              </div>
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="btn btn-block"
+            style={{
+              backgroundColor: "#655D8A",
+              width: "300px",
+              marginLeft: "39%",
+              marginTop : "4%",
+              color: "white",
+            }}
+            onClick = {() => submithandler1()}
+          >
+            Update Password
+          </button>
         </div>
       </div>
     </div>

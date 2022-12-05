@@ -6,9 +6,11 @@ import Swal from "sweetalert2";
 export default function Profile() {
   const { data, setData } = useContext(UserContext);
   const [view, setView] = useState("");
+  const [view1,setView1] = useState(""); 
     const aadharnumber = useRef();
     const phonenumber = useRef();
     const password = useRef();
+    const password1 = useRef();
     const name = useRef();
 
   const handler = (e) => {
@@ -35,7 +37,7 @@ export default function Profile() {
   };
 
 
-  function ValidatePassword(x) {
+  function ValidatePassword(x,pass) {
     if (x.length >= 8) {
       let bigchar = 0;
       let smallchar = 0;
@@ -47,19 +49,19 @@ export default function Profile() {
       }
       if (bigchar >= 1 && smallchar >= 1 && numeric >= 1) return true;
       else {
-        password.current.focus();
-        password.current.style["box-shadow"] = "0 0 10px red";
+        pass.current.focus();
+        pass.current.style["box-shadow"] = "0 0 10px red";
         setTimeout(() => {
-          password.current.style["box-shadow"] = "";
-        }, 5000);
+          pass.current.style["box-shadow"] = "";
+        }, 3000);
         return false;
       }
     }
-    password.current.focus();
-    password.current.style["box-shadow"] = "0 0 10px red";
+    pass.current.focus();
+    pass.current.style["box-shadow"] = "0 0 10px red";
     setTimeout(() => {
-      password.current.style["box-shadow"] = "";
-    }, 5000);
+      pass.current.style["box-shadow"] = "";
+    }, 3000);
     return false;
   }
 
@@ -73,12 +75,45 @@ export default function Profile() {
      }
    };
 
+   const showPass1 = () => {
+    if (view1 === "") {
+      setView1("-slash");
+      password1.current.type = "text";
+    } else {
+      setView1("");
+      password1.current.type = "password";
+    }
+   }
+
+   const submithandler1 = () => {
+      if(ValidatePassword(password.current.value,password) && ValidatePassword(password1.current.value,password1) && password.current.value === data.password){
+        axios.patch(`http://localhost:5000/patients/${data.id}`,{password : password1.current.value}).then(() => {
+          password.current.value = ""
+          password1.current.value = ""
+          Swal.fire({
+            icon: "success",
+            title: "Password updated successfully",
+          });
+          window.location.reload(false)
+        })
+      }
+      else if (
+        ValidatePassword(password.current.value, password) &&
+        ValidatePassword(password1.current.value, password1)
+      ) {
+        Swal.fire({
+          icon: "error",
+          title: "Current Password doesn't match",
+        });
+
+      }
+   }
+
 
   const submithandler = (e) => {
     e.preventDefault();
     let tempp = validate(data.phonenumber, 10);
     let tempa = validate(data.aadhdarnumber, 12);
-    let temppass = ValidatePassword(data.password);
     let tempname = validateName(data.name)
     if (tempp === true) {
       phonenumber.current.focus();
@@ -110,7 +145,7 @@ export default function Profile() {
         name.current.style["background"] = "";
       }, 3000);
     }
-    if (tempa !== true && tempp !== true &&  temppass === true && tempname !== true) {
+    if (tempa !== true && tempp !== true && tempname !== true) {
       axios.patch(`http://localhost:5000/patients/${data.id}`, { ...data }).then(resp => {
         if (resp.status === 200) {
           Swal.fire({
@@ -149,7 +184,6 @@ export default function Profile() {
               display: "inline-block",
               marginRight: "0px",
               paddingTop: "20px",
-              marginTop: "40px",
               boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px",
               borderRadius: "10px",
             }}
@@ -184,7 +218,6 @@ export default function Profile() {
                   border: "1px solid black",
                   backgroundColor: "white",
                   height: "590px",
-                  marginTop: "40px",
                   boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px",
                   paddingRight: "30px",
                   paddingLeft: "50px",
@@ -314,7 +347,7 @@ export default function Profile() {
                         <label style={{ fontWeight: "450" }}>Allergies</label>
                         <textarea
                           className="form-control"
-                          style={{ height: "95px", width: "550px" }}
+                          style={{ height: "125px", width: "550px" }}
                           value={data.allergies}
                           name="allergies"
                           onChange={(e) => handler(e)}
@@ -327,42 +360,11 @@ export default function Profile() {
                         </label>
                         <textarea
                           className="form-control"
-                          style={{ height: "95px", width: "550px" }}
+                          style={{ height: "125px", width: "550px" }}
                           value={data.past_medical_history}
                           name="past_medical_history"
                           onChange={(e) => handler(e)}
                         ></textarea>
-                      </div>
-                      <br />
-                      <div className="row">
-                        <div className="col-3">
-                          <label
-                            className="col-form-label"
-                            style={{ fontWeight: "450" }}
-                          >
-                            Password
-                          </label>
-                        </div>
-                        <div className="col-8">
-                          <input
-                            type="password"
-                            className="form-control"
-                            name="password"
-                            value={data.password}
-                            ref={password}
-                            onChange={(e) => handler(e)}
-                          ></input>
-                        </div>
-                        <div onClick={() => showPass()}>
-                          <i
-                            className={`fa-solid fa-eye${view} input-icons-i`}
-                            style={{
-                              position: "absolute",
-                              top: "92%",
-                              right: "14%",
-                            }}
-                          ></i>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -384,6 +386,89 @@ export default function Profile() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="row">
+        <div
+          style={{
+            border: "1px solid black",
+            backgroundColor: "white",
+            height: "260px",
+            width : "88%",
+            display: "inline-block",
+            marginRight: "0px",
+            paddingTop: "20px",
+            marginBottom: "50px",
+            marginTop: "40px",
+            boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px",
+            borderRadius: "10px",
+          }}
+        >
+          <h2>Update Password</h2>
+          <br />
+          <div className="row" style={{ marginTop: "10px" }}>
+            <div className="col-2" style={{ marginLeft: "20px" }}>
+              <label className="col-form-label" style={{ fontWeight: "450" }}>
+                Current Password
+              </label>
+            </div>
+            <div className="col-3">
+              <input
+                className="form-control"
+                ref={password}
+                name="password"
+                type="password"
+              ></input>
+              <div onClick={() => showPass()}>
+                <i
+                  className={`fa-solid fa-eye${view} input-icons-i`}
+                  style={{
+                    position: "absolute",
+                    top: "30%",
+                    right: "7%",
+                  }}
+                ></i>
+              </div>
+            </div>
+            <div className="col-1"></div>
+            <div className="col-2">
+              <label className="col-form-label" style={{ fontWeight: "450" }}>
+                New Password
+              </label>
+            </div>
+            <div className="col-3">
+              <input
+                className="form-control"
+                ref={password1}
+                type="password"
+              ></input>
+              <div onClick={() => showPass1()}>
+                <i
+                  className={`fa-solid fa-eye${view1} input-icons-i`}
+                  style={{
+                    position: "absolute",
+                    top: "30%",
+                    right: "7%",
+                  }}
+                ></i>
+              </div>
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="btn btn-block"
+            style={{
+              backgroundColor: "#655D8A",
+              width: "300px",
+              marginLeft: "39%",
+              marginTop : "4%",
+              color: "white",
+            }}
+            onClick = {() => submithandler1()}
+          >
+            Update Password
+          </button>
         </div>
       </div>
     </div>
