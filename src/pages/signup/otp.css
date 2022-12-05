@@ -1,0 +1,8 @@
+.otpbut{
+    color: blue;
+    text-decoration: underline;
+}
+
+.otpbut:hover{
+    cursor: pointer;
+}

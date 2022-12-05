@@ -152,7 +152,9 @@ export default function Doctor(props){
           }
 
           if(flag === 0){
-            props.setLevel(3)
+            props.setLevel(prev => {
+              return prev+1;
+            })
             props.setData((prevdata) => {
                 let newdata = {...prevdata}
                 newdata.name = name.current.value;
@@ -310,10 +312,10 @@ export default function Doctor(props){
             <div className="form-group">
               <div className="row">
                 <div className="col-2">
-                  <i class="bi bi-people-fill"></i>
+                  <i className="bi bi-people-fill"></i>
                 </div>
                 <div className="col-10">
-                  <select class="form-control" ref={gender}>
+                  <select className="form-control" ref={gender}>
                     <option value="" hidden disabled selected>
                       Gender
                     </option>

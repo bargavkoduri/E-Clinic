@@ -3,6 +3,7 @@ import Credential from "./credential";
 import Doctor from "./doctor";
 import Patient from "./patient";
 import Progressbar from "./progressbar";
+import OTP from "./otp"
 import { Link } from "react-router-dom";
 import axios from "axios";
 export default function Data(props) {
@@ -56,7 +57,12 @@ export default function Data(props) {
         <Credential setLevel={setLevel} setData={setData} />
       </>
     );
-  } else if (level === 2) {
+  }
+  else if(level === 2){
+    return (
+      <OTP data={data} setLevel={setLevel}/>
+    )
+  } else if (level === 3) {
     if (user === "doctor")
       return (
         <>
@@ -77,7 +83,8 @@ export default function Data(props) {
           <Patient setLevel={setLevel} setData={setData} />
         </>
       );
-  } else if (level === 3) {
+  }
+   else if (level === 4) {
     if(user === "doctor"){
       axios.post(`http://localhost:5000/dupdoctors`, data);
     }

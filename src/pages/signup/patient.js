@@ -113,7 +113,9 @@ export default function Patient(props){
       }
 
       if(flag === 0){
-        props.setLevel(3)
+        props.setLevel(prev => {
+          return prev+1
+        })
         props.setData((prevdata) => {
           let newdata = {...prevdata}
           newdata.name = name.current.value
