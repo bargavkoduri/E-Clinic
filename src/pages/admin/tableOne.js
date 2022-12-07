@@ -1,16 +1,32 @@
 import axios from "axios";
 import { React, useEffect, useState } from "react";
+import emailjs from "emailjs-com"
 
 export default function TableFour() {
+
   function deleteQuery(id) {
-    fetch(`http://localhost:5000/admin/${id}`, {
-      method: "DELETE",
-    }).then((result) => {
-      result.json().then((resp) => {
-        console.log(resp);
-        getQueries();
+    axios.get(`http://localhost:5000/admin/${id}`).then(resp => {
+    console.log(resp.data);
+    console.log(document.getElementById(`solution${id}`))
+    resp.data.solution = document.getElementById(`solution${id}`).value
+    console.log(resp.data)
+    emailjs.send('service_qdk26kq', 'template_e03mhe9', resp.data, 'S3FizJZT73PoNz-yc')
+      .then((result) => {
+        console.log(result);
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
       });
-    });
+});
+fetch(`http://localhost:5000/admin/${id}`, {
+  method: "DELETE",
+}).then((result) => {
+  result.json().then((resp) => {
+    console.log(resp);
+    getQueries();
+  });
+});
+  
   }
   let [res, setRes] = useState("default");
   useEffect(() => {
@@ -42,8 +58,11 @@ export default function TableFour() {
               <th scope="col" width="15%">
                 email
               </th>
-              <th scope="col" width="50%">
+              <th scope="col" width="10%">
                 query
+              </th>
+              <th scope="col" width="10%">
+                solution
               </th>
               <th scope="col" width="10%" className="table">
                 verification
@@ -55,12 +74,13 @@ export default function TableFour() {
               return (
                 <tr key={index}>
                   <td key={`1${index}`}>{queri.id}</td>
-                  <td key={`2${index}`}>{queri.name}</td>
+                  <td key={`2${index}`} name="namee">{queri.name}</td>
                   <td key={`3${index}`}>{queri.email}</td>
                   <td key={`4${index}`}>{queri.query}</td>
-                  <td key={`5${index}`}>
+                  <td key={`5${index}`}  ><textarea id={`solution${queri.id}`} rows="4" cols="50"/></td>
+                  <td key={`6${index}`}>
                     <button onClick={() => deleteQuery(queri.id)}>
-                      query solved
+                      send mail
                     </button>
                   </td>
                 </tr>
