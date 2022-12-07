@@ -2,8 +2,8 @@
   "patients": [
     {
       "email": "gubbasainithin@gmail.com",
-      "password": "Password1234",
-      "name": "Sai Nithin",
+      "password": "Password123",
+      "name": "Nithin",
       "aadhdarnumber": "939393939393",
       "phonenumber": "9999999918",
       "gender": "male",
@@ -82,7 +82,7 @@
       "password": "Password1234",
       "name": "Royal",
       "aadhdarnumber": "949494949494",
-      "phonenumber": "9090909090",
+      "phonenumber": "9848795699",
       "gender": "Male",
       "dob": "2004-11-04",
       "qualification": "MBBS",
@@ -92,7 +92,7 @@
       "charges": "600",
       "appointments": [
         {
-          "date": "2022-11-02T17:57:58.367Z",
+          "date": "2022-12-08T17:57:58.367Z",
           "time": "21:30-22:00",
           "patient": {
             "name": "Patient-1",
@@ -100,7 +100,7 @@
           }
         },
         {
-          "date": "2022-10-31T17:57:58.367Z",
+          "date": "2022-12-08T17:57:58.367Z",
           "time": "21:00-21:30",
           "patient": {
             "name": "Patient-1",
@@ -108,7 +108,7 @@
           }
         },
         {
-          "date": "2022-10-30T17:57:58.367Z",
+          "date": "2022-11-30T17:57:58.367Z",
           "time": "21:00-21:30",
           "patient": {
             "name": "Patient-1",
@@ -419,22 +419,7 @@
       "id": 1
     }
   ],
-  "admin": [
-    {
-      "name": "Sai Nitin",
-      "email": "sainithin.g20@iiits.in",
-      "phonenumber": "9494551878",
-      "query": "none",
-      "id": 1
-    },
-    {
-      "name": "Sai Nitin",
-      "email": "sainithin.g20@iiits.in",
-      "phonenumber": "9494551878",
-      "query": "none",
-      "id": 2
-    }
-  ],
+  "admin": [],
   "admin_cred": [
     {
       "email": "admin@gmail.com",

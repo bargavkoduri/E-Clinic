@@ -72,8 +72,8 @@ fetch(`http://localhost:5000/admin/${id}`, {
           <tbody>
             {res.data.map((queri, index) => {
               return (
-                <tr key={index}>
-                  <td key={`1${index}`}>{queri.id}</td>
+                <tr key={queri.id}>
+                  <td key={`1${index}`}>{index+1}</td>
                   <td key={`2${index}`} name="namee">{queri.name}</td>
                   <td key={`3${index}`}>{queri.email}</td>
                   <td key={`4${index}`}>{queri.query}</td>

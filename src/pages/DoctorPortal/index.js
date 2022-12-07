@@ -49,7 +49,7 @@ export default function Doctor(){
              (((d.getMonth() + 1).toString().length === 1 ? "0" : "") +
                (d.getMonth() + 1).toString()) +
              "-" +
-             d.getDate();
+             (d.getDate().toString().length === 1 ? `0${d.getDate()}` : `${d.getDate()}`)
            let temptime = d.getHours() + ":" + d.getMinutes();
            temptime = (temptime.length === 4 ? "0" : "") + temptime;
            //console.log(temptime+" "+td)
