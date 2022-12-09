@@ -74,6 +74,34 @@
       "appointments": [],
       "messages": [],
       "id": 5
+    },
+    {
+      "email": "sribargavatejaswi.k20@iiits.in",
+      "password": "Password1",
+      "name": "Bargav",
+      "aadhdarnumber": "989898989898",
+      "phonenumber": "9898989898",
+      "gender": "male",
+      "dob": "2022-12-10",
+      "allergies": "none",
+      "past_medical_history": "none",
+      "appointments": [],
+      "messages": [],
+      "id": 6
+    },
+    {
+      "email": "bhargavkoduri123@gmail.com",
+      "password": "Password1",
+      "name": "Tejaswi",
+      "aadhdarnumber": "984898989811",
+      "phonenumber": "94945519878",
+      "gender": "male",
+      "dob": "2022-12-09",
+      "allergies": "none",
+      "past_medical_history": "none",
+      "appointments": [],
+      "messages": [],
+      "id": 7
     }
   ],
   "doctors": [
@@ -419,7 +447,22 @@
       "id": 1
     }
   ],
-  "admin": [],
+  "admin": [
+    {
+      "name": "Sai Nithin",
+      "email": "sainithin.g20@iiits.in",
+      "phonenumber": "9090909090",
+      "query": "Issue with my account",
+      "id": 1
+    },
+    {
+      "name": "Bargav",
+      "email": "bhargavkoduri123@gmail.com",
+      "phonenumber": "94949551878",
+      "query": "How to book an appointment?",
+      "id": 2
+    }
+  ],
   "admin_cred": [
     {
       "email": "admin@gmail.com",
