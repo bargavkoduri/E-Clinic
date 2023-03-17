@@ -1,8 +1,9 @@
 import axios from "axios";
 import { React, useEffect, useState } from "react";
+import { SERVER_URL } from "../../constants";
 export default function TableTwo() {
   function acceptDoctor(id) {
-    fetch(`http://localhost:5000/dupdoctors/${id}`, {
+    fetch(`${SERVER_URL}/dupdoctors/${id}`, {
       method: "DELETE",
     }).then((result) => {
       result.json().then((resp) => {
@@ -11,7 +12,7 @@ export default function TableTwo() {
       });
     });
 
-    fetch(`http://localhost:5000/doctors`, {
+    fetch(`${SERVER_URL}/doctors`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(res.data.find((item) => item.id === id)),
@@ -26,7 +27,7 @@ export default function TableTwo() {
     getDoctors();
   }, []);
   function getDoctors() {
-    axios.get("http://localhost:5000/dupdoctors").then((res) => {
+    axios.get(SERVER_URL+"/dupdoctors").then((res) => {
       setRes(res);
     });
   }

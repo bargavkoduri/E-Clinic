@@ -1,9 +1,11 @@
 import "./admin.css"
 import axios from 'axios' 
 import { React,useEffect,useState } from 'react'
+import { SERVER_URL } from "../../constants"
+
 export default function TableThree() {
    function deleteDoctor(id){
-      fetch(`http://localhost:5000/doctors/${id}`,{
+      fetch(`${SERVER_URL}/doctors/${id}`,{
         method:'DELETE'
       }).then((result)=>{
         result.json().then((resp)=>{
@@ -18,7 +20,7 @@ export default function TableThree() {
           
     },[]) 
     function getogDoctors(){
-      axios.get("http://localhost:5000/doctors").then(res=>{
+      axios.get(SERVER_URL+"/doctors").then(res=>{
         setRes(res)
       }) 
     }

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {  useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import { SERVER_URL } from "../../constants";
 function Index() {
   let [Errmsg, setErrmsg] = useState("");
   let email = useRef();
@@ -95,16 +96,16 @@ function Index() {
       ValidatePassword(password.current.value)
     ) {
       let resp = await axios.get(
-        `http://localhost:5000/patients?email=${email.current.value}&password=${password.current.value}`);
+        `${SERVER_URL}/patients?email=${email.current.value}&password=${password.current.value}`);
       if (resp.data.length === 0) {
         resp = await axios.get(
-          `http://localhost:5000/doctors?email=${email.current.value}&password=${password.current.value}`
+          `${SERVER_URL}/doctors?email=${email.current.value}&password=${password.current.value}`
         );
         flag = 1;
       }
       if(resp.data.length === 0){
         resp = await axios.get(
-          `http://localhost:5000/admin_cred?email=${email.current.value}&password=${password.current.value}`
+          `${SERVER_URL}/admin_cred?email=${email.current.value}&password=${password.current.value}`
         );
         flag = 2;
       }

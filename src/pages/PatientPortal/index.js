@@ -7,6 +7,7 @@ import ErrPage from "../404page";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { SERVER_URL } from "../../constants";
 export const PatientContext = React.createContext()
 
 function Patient() {
@@ -34,7 +35,7 @@ function Patient() {
   function helperfun() {
     const items = JSON.parse(localStorage.getItem('items'))
     axios
-      .get(`http://localhost:5000/patients?email=${items.email}`)
+      .get(`${SERVER_URL}/patients?email=${items.email}`)
       .then((res) => {
         setData(res.data[0]);
         setMsgs(res.data[0].messages)

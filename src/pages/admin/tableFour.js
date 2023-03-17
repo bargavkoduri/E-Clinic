@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { React,useEffect,useState } from 'react'
+import { SERVER_URL } from '../../constants';
 
 export default function TableFour() {
   function deletePatient(id){
-  fetch(`http://localhost:5000/patients/${id}`,{
+  fetch(`${SERVER_URL}/patients/${id}`,{
     method:'DELETE'
   }).then((result)=>{
     result.json().then((resp)=>{
@@ -18,7 +19,7 @@ export default function TableFour() {
           
     },[]) 
     function getPatients(){
-      axios.get("http://localhost:5000/patients").then(res=>{
+      axios.get(SERVER_URL+"/patients").then(res=>{
         setRes(res)
       }) 
     }

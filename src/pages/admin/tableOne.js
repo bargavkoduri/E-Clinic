@@ -1,11 +1,12 @@
 import axios from "axios";
 import { React, useEffect, useState } from "react";
 import emailjs from "emailjs-com"
+import { SERVER_URL } from "../../constants";
 
 export default function TableFour() {
 
   function deleteQuery(id) {
-    axios.get(`http://localhost:5000/admin/${id}`).then(resp => {
+    axios.get(`${SERVER_URL}/admin/${id}`).then(resp => {
     console.log(resp.data);
     console.log(document.getElementById(`solution${id}`))
     resp.data.solution = document.getElementById(`solution${id}`).value
@@ -18,7 +19,7 @@ export default function TableFour() {
           console.log(error.text);
       });
 });
-fetch(`http://localhost:5000/admin/${id}`, {
+fetch(`${SERVER_URL}/admin/${id}`, {
   method: "DELETE",
 }).then((result) => {
   result.json().then((resp) => {
@@ -33,7 +34,7 @@ fetch(`http://localhost:5000/admin/${id}`, {
     getQueries();
   }, []);
   function getQueries() {
-    axios.get("http://localhost:5000/admin").then((res) => {
+    axios.get(SERVER_URL+"/admin").then((res) => {
       setRes(res);
     });
   }

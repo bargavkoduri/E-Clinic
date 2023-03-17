@@ -6,6 +6,7 @@ import axios from "axios";
 import ErrPage from '../404page'
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { SERVER_URL } from "../../constants";
 
 export const DoctorContext = React.createContext()
 
@@ -33,7 +34,7 @@ export default function Doctor(){
      function helperfun() {
       const items = JSON.parse(localStorage.getItem('items'))
        axios
-         .get(`http://localhost:5000/doctors?email=${items.email}`)
+         .get(`${SERVER_URL}/doctors?email=${items.email}`)
          .then((res) => {
            setData(res.data[0]);
            setMsgs(res.data[0].messages)
